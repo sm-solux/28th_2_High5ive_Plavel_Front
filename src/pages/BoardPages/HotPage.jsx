@@ -1,10 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import TopBar from '../../components/TopBar';
+
+const Body = styled.div`
+    margin-top: 10vh;
+`
 
 const HotPage = () => {
     return (
-        <div>
-            인기페이지
-        </div>
+        <>
+            <TopBar/>
+            <Body>
+                인기페이지
+            </Body>
+        </>
     );
 };
 

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Wrapper = styled.div`
     width: 100%;
     height: 10vh;
+    background-color: white;
     position: fixed;
     top: 0px;
     display: flex;

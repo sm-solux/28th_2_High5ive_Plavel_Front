@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../images/bar_logo.png';
+import { motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -21,6 +23,7 @@ const LogoTabDiv = styled.div`
 `
 const Logo = styled.img`
     width: 3vw;
+    cursor: pointer;
 `
 const TabDiv = styled.div`
     display: flex;
@@ -31,32 +34,31 @@ const Tab = styled.div`
     font-weight: 600;
     font-size: 1.2vw;
     margin-left: 70px;
+    cursor: pointer;
 `
 const MyTab = styled.div`
     color: #6695F1;
     font-weight: 600;
     font-size: 1.1vw;
     margin-right: 30px;
+    cursor: pointer;
 `
-const Line = styled(motion.hr)`
-  border: 0;
-  height: 4px;
-  background-color: #6695F1;
-  margin-top: 27px;
-  opacity: 1;
-  border-radius: 50px;
-  transition: all ease 0.3s;
-`;
 
 const TopBar = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     return (
         <Wrapper>
             <LogoTabDiv>
                 <Logo src={logo}/>
                 <TabDiv>
-                    <Tab>홈</Tab>
-                    <Tab>최신 글</Tab>
-                    <Tab>인기 글</Tab>
+                    <Tab onClick={() => navigate("/home")}>
+                        홈</Tab>
+                    <Tab onClick={() => navigate("/recent")}>
+                        최신 글</Tab>
+                    <Tab onClick={() => navigate("/hot")}>
+                        인기 글</Tab>
                 </TabDiv>
             </LogoTabDiv>
             <MyTab>마이페이지</MyTab>

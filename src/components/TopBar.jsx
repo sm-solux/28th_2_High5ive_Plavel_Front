@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import logo from '../images/bar_logo.png';
 import mylogo from '../images/mypage_icon.png'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { color } from 'framer-motion';
 
 
 const Wrapper = styled.div`

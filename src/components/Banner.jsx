@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import logo from '../images/banner_logo.png';
@@ -38,7 +37,6 @@ let category2 = [
 ];
 
 const Banner = () => {
-    const navigate = useNavigate();
     const settings = {
         dots: true,
         arrow: false,
@@ -101,7 +99,7 @@ export default Banner;
 const Wrapper = styled.div`
   max-width: 100%;
   .slick-dots {
-    bottom: 50px;
+    bottom: 3vh;
   }
   .slick-slide {
     width: 100%;
@@ -181,24 +179,25 @@ const Categorydiv = styled.div`
     text-align: center;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 2vh;
 `
 const Label = styled.img`
     margin: auto;
+    height: 4vh;
 `
 const Icon = styled.img`
     margin: auto;
-    margin-top: 20px;
+    margin-top: 2vh;
     height: 7vw;
 `
 const Name = styled.div`
     color: #272727;
-    margin-top: 20px;
+    margin-top: 2vh;
     font-size: 1.2vw;
     font-weight: 700;
 `
 const Detail = styled.div`
-    margin-top: 20px;
+    margin-top: 2vh;
     color: #272727;
     text-align: center;
     font-size: 1vw;

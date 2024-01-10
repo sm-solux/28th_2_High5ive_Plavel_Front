@@ -51,7 +51,7 @@ const MyTab = styled.div`
     cursor: pointer;
 `
 const MyIcon = styled.img`
-    width: 2.5vw;
+    width: 2vw;
     margin-left: 10px;
 `
 

@@ -34,14 +34,14 @@ const TabDiv = styled.div`
 `
 const Tab = styled.div`
     font-weight: 600;
-    font-size: 1.2vw;
+    font-size: 20px;
     margin-left: 70px;
     cursor: pointer;
 `
 const MyTab = styled.div`
     color: #6695F1;
     font-weight: 600;
-    font-size: 1vw;
+    font-size: 16px;
     margin-right: 30px;
     height: 10vh;
     display: flex;

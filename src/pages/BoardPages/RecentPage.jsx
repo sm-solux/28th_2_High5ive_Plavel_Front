@@ -11,11 +11,12 @@ import label_whitehole from '../../images/label/whitehole.svg';
 import label_blackhole from '../../images/label/blackhole.svg';
 import bookmark from '../../images/bookmark.svg';
 import comment from '../../images/comment.svg';
+import profileimg from '../../images/dummyprofileimg.png';
 
 const Body = styled.div`
     margin-top: 10vh;
     background-color: #E6EEFC;
-    padding: 50px 70px 50px 70px;
+    padding: 50px 100px 50px 100px;
     display: flex;
     justify-content: space-between;
 `
@@ -29,6 +30,11 @@ const List = styled.div`
     border: 1px solid #DFDFDF;
     margin-bottom: 20px;
     padding: 30px;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid #6695F1;
+        background-color: #F4F8FF;
+    }
 `
 const Title = styled.div`
     color: #262626;
@@ -88,7 +94,7 @@ const Bookmark = styled.div`
     margin-left: 5px;
 `
 const InfoContainer = styled.div`
-    width: calc(30vw - 70px);
+    width: calc(30vw - 100px);
 `
 const FilterBox = styled.div`
     position: fixed;
@@ -97,7 +103,7 @@ const FilterBox = styled.div`
     border-radius: 20px;
     border: 1px solid #DFDFDF;
     background: #FFF;
-    width: calc(30vw - 70px);
+    width: calc(30vw - 100px);
     padding: 30px;
 `
 const Text = styled.div`
@@ -107,23 +113,56 @@ const Text = styled.div`
 `
 const LabelDiv = styled.div`
     display: flex;
+    margin-top: 20px;
+    justify-content: center;
 `
 const LabelLine = styled.div`
     display: block;
     width: 25%;
 `
 const LabelBtn = styled.img`
-    
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover {
+        //transform: translateY( -5px );
+        transform: scale( 1.1 );
+    }
 `
 const MyInfoBox = styled.div`
     position: fixed;
-    top: calc(10vh + 50px + 30vh + 20px);
+    top: calc(10vh + 50px + 80px + 55px + 35px*4 + 20px);
     right: 70px;
     border-radius: 20px;
     border: 1px solid #DFDFDF;
     background: #FFF;
-    width: calc(30vw - 70px);
+    width: calc(30vw - 100px);
     padding: 30px;
+`
+const MyDiv = styled.div`
+    text-align: center;
+    justify-content: center;
+`
+const ProfileImg = styled.img`
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    margin-top: 20px;
+`
+const MyLabelExp = styled.div`
+    color: #B1B1B1;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 15px;
+`
+const MyName = styled.div`
+    color: #262626;
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 10px;
+`
+const MyLabel = styled.img`
+    width: 120px;
+    margin-top: 10px;
 `
 
 let list = [
@@ -161,7 +200,7 @@ const RecentPage = () => {
                     <FilterBox>
                         <Text>필터</Text>
                         <LabelDiv>
-                            <LabelLine>
+                            <LabelLine style={{marginRight:"70px"}}>
                                 <LabelBtn  src={label_sun}/>
                                 <LabelBtn src={label_jupiter}/>
                                 <LabelBtn src={label_comet}/>
@@ -177,6 +216,12 @@ const RecentPage = () => {
                     </FilterBox>
                     <MyInfoBox>
                         <Text>나의 정보</Text>
+                        <MyDiv>
+                            <ProfileImg src={profileimg}/>
+                            <MyLabelExp>자유분방 어디로든, 혜성형 여행자</MyLabelExp>
+                            <MyName>닉네임님</MyName>
+                            <MyLabel src={label_comet}/>
+                        </MyDiv>
                     </MyInfoBox>
                 </InfoContainer>
             </Body>

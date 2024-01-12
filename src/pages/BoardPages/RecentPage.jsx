@@ -12,6 +12,7 @@ import label_blackhole from '../../images/label/blackhole.svg';
 import bookmark from '../../images/bookmark.svg';
 import comment from '../../images/comment.svg';
 import profileimg from '../../images/dummyprofileimg.png';
+import { useNavigate } from 'react-router-dom';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -168,29 +169,34 @@ const MyLabel = styled.img`
 let list = [
     {id: 1, title: '첫번째 글', detail: '첫번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_blackhole, date: '2024/01/10 21:25', comment: 2, bookmark: 20},
     {id: 2, title: '두번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_comet, date: '2024/01/10 21:25', comment: 10, bookmark: 2},
-    {id: 2, title: '세번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_sun, date: '2024/01/10 21:25', comment: 25, bookmark: 1},
-    {id: 2, title: '네번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_jupiter, date: '2024/01/10 21:25', comment: 32, bookmark: 0},
+    {id: 3, title: '세번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_sun, date: '2024/01/10 21:25', comment: 25, bookmark: 1},
+    {id: 4, title: '네번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_jupiter, date: '2024/01/10 21:25', comment: 32, bookmark: 0},
 ];  
 
 const RecentPage = () => {
+    const navigate = useNavigate();
+    const handleClickList = (e) => {
+        const listId = e.target.id;
+        navigate(`/detail/${listId}`);
+    }
     return (
         <>
             <TopBar/>
             <Body>
                 <ListContainer>
                     {list && list.map(list => (
-                        <List>
-                            <Title>{list.title}</Title>
-                            <Detail>{list.detail}</Detail>
+                        <List key={list.id} id={list.id} onClick={handleClickList}>
+                            <Title id={list.id}>{list.title}</Title>
+                            <Detail id={list.id}>{list.detail}</Detail>
                             <Line>
                                 <InfoDiv>
-                                    <Label src={list.label}/>
-                                    <Writer>{list.writer}</Writer>
-                                    <Date>{list.date}</Date>
+                                    <Label src={list.label} id={list.id}/>
+                                    <Writer id={list.id}>{list.writer}</Writer>
+                                    <Date id={list.id}>{list.date}</Date>
                                 </InfoDiv>
                                 <CommentBM>
-                                    <CommentImg src={comment}/><Comment>{list.comment}</Comment>
-                                    <BMImg src={bookmark}/><Bookmark>{list.bookmark}</Bookmark>
+                                    <CommentImg src={comment} id={list.id}/><Comment id={list.id}>{list.comment}</Comment>
+                                    <BMImg src={bookmark} id={list.id}/><Bookmark id={list.id}>{list.bookmark}</Bookmark>
                                 </CommentBM>
                             </Line>
                         </List>

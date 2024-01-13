@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import profileimg from '../../images/dummyprofileimg.png';
 import label_blackhole from '../../images/label/blackhole.svg';
 import dummy1 from '../../images/dummy1.png';
 import dummy2 from '../../images/dummy2.png';
+import comment from '../../images/comment.svg';
+import bookmark from '../../images/bookmark.svg';
+import bookmark_on from '../../images/bookmark_on.svg';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -69,6 +72,31 @@ const Img = styled.img`
     height: 200px;
     margin-right: 10px;
 `
+const CommentBMLine = styled.div`
+    display: flex;
+`
+const CommentBMDiv = styled.div`
+    display: flex;
+    width: 50px;
+    height: 20px;
+    border-radius: 20px;
+    border: 1.5px solid #afaeae;
+    background: #FFF;
+    padding: 10px 15px;
+    margin-right: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+
+    img {
+        width: 20px;
+    }
+`
+const HowMany = styled.div`
+    color: #7F7F7F;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 15px;
+`
 
 const InfoContainer = styled.div`
     width: calc(30vw - 100px);
@@ -131,6 +159,12 @@ const InfoTxt = styled.div`
 `
 
 const DetailPage = () => {
+    const [isBM, setIsBM] = useState(false);
+
+    const handleBM = (e) => {
+        setIsBM(isBM => !isBM);
+        !isBM? alert("북마크에 저장되었습니다.") : alert("북마크가 취소되었습니다.");
+    }
     return (
         <>
             <TopBar/>
@@ -166,6 +200,16 @@ const DetailPage = () => {
                             <Img src={dummy1}/>
                             <Img src={dummy2}/>
                         </ImgLine>
+                        <CommentBMLine>
+                            <CommentBMDiv>
+                                <img src={comment}/>
+                                <HowMany>2</HowMany>
+                            </CommentBMDiv>
+                            <CommentBMDiv onClick={handleBM} style={isBM? {borderColor:"#6695F1", backgroundColor:"#E6EEFC"}: {}}>
+                                {isBM? <img src={bookmark_on}/> :<img src={bookmark}/>}
+                                <HowMany style={isBM? {color:"#6695F1"} : {}}>20</HowMany>
+                            </CommentBMDiv>
+                        </CommentBMLine>
                     </Detail>
                 </DetailContainer>
                 <InfoContainer>

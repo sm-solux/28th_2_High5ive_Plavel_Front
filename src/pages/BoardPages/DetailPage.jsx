@@ -8,6 +8,7 @@ import dummy2 from '../../images/dummy2.png';
 import comment from '../../images/comment.svg';
 import bookmark from '../../images/bookmark.svg';
 import bookmark_on from '../../images/bookmark_on.svg';
+import send from '../../images/send.svg';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -15,7 +16,7 @@ const Body = styled.div`
     padding: 50px 100px 50px 100px;
     display: flex;
     justify-content: space-between;
-    height: calc(90vh - 100px);
+    min-height: calc(90vh - 100px);
 `
 const DetailContainer = styled.div`
     width: calc(65vw - 100px);
@@ -97,6 +98,36 @@ const HowMany = styled.div`
     font-weight: 600;
     margin-left: 15px;
 `
+const CommentField = styled.div`
+    
+`
+const InputLine = styled.div`
+    margin-top: 50px;
+    display: flex;
+    border-radius: 25.5px;
+    background: #F2F2F2;
+    padding: 5px;
+    justify-content: space-between;
+`
+const Input = styled.input`
+    border: none;
+    background-color: #F2F2F2;
+    padding: 12px;
+    padding-left: 20px;
+    outline: none;
+    width: 85%;
+`
+const SendBtn = styled.button`
+    border-radius: 21.5px;
+    background: #6695F1;
+    border: none;
+    width: 93px;
+    cursor: pointer;
+    &:hover {
+        background: #5880cf;
+    }
+`
+
 
 const InfoContainer = styled.div`
     width: calc(30vw - 100px);
@@ -160,11 +191,16 @@ const InfoTxt = styled.div`
 
 const DetailPage = () => {
     const [isBM, setIsBM] = useState(false);
+    const [input, setInput] = useState('');
 
     const handleBM = (e) => {
         setIsBM(isBM => !isBM);
         !isBM? alert("북마크에 저장되었습니다.") : alert("북마크가 취소되었습니다.");
     }
+    const onChangeInput = (e) => {
+        setInput(e.target.value);
+    }
+
     return (
         <>
             <TopBar/>
@@ -210,6 +246,18 @@ const DetailPage = () => {
                                 <HowMany style={isBM? {color:"#6695F1"} : {}}>20</HowMany>
                             </CommentBMDiv>
                         </CommentBMLine>
+                        <CommentField>
+
+                        </CommentField>
+                        <InputLine>
+                            <Input 
+                                name='comment'
+                                type='text'
+                                placeholder='댓글을 입력해주세요.'
+                                onChange={onChangeInput}
+                                value={input}/>
+                            <SendBtn><img src={send}/></SendBtn>
+                        </InputLine>
                     </Detail>
                 </DetailContainer>
                 <InfoContainer>

@@ -101,7 +101,7 @@ const HowMany = styled.div`
     margin-left: 15px;
 `
 const CommentField = styled.div`
-    
+    margin-top: 35px;
 `
 const InputLine = styled.div`
     margin-top: 50px;

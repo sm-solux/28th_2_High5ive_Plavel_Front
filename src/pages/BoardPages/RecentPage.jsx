@@ -231,7 +231,7 @@ const RecentPage = () => {
                         </MyDiv>
                     </MyInfoBox>
                 </InfoContainer>
-            
+                <WriteBtn/>
             </Body>
         </>
     );

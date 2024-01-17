@@ -11,6 +11,7 @@ import bookmark from '../../images/bookmark.svg';
 import bookmark_on from '../../images/bookmark_on.svg';
 import send from '../../images/send.svg';
 import Comment from '../../components/Comment';
+import WriteBtn from '../../components/WriteBtn';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -291,6 +292,7 @@ const DetailPage = () => {
                         <InfoTxt>안녕하세요, 저는 휴학하고 이곳저곳 여행 다니고있는 20대입니다. 저는 즉흥적인 편이긴하지만, 함께 여행하는 사람의 성향에 따라서 계획을 짜야할 땐 신중하게 잘 짜는 편이에요!</InfoTxt>
                     </InfoBox>
                 </InfoContainer>
+                <WriteBtn/>
             </Body>
         </>
     );

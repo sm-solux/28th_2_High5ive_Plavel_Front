@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import profileimg from '../../images/dummyprofileimg.png';
 import label_blackhole from '../../images/label/blackhole.svg';
+import label_moon from '../../images/label/moon.svg';
 import dummy1 from '../../images/dummy1.png';
 import dummy2 from '../../images/dummy2.png';
 import comment from '../../images/comment.svg';
 import bookmark from '../../images/bookmark.svg';
 import bookmark_on from '../../images/bookmark_on.svg';
 import send from '../../images/send.svg';
+import Comment from '../../components/Comment';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -189,6 +191,11 @@ const InfoTxt = styled.div`
     padding: 10px 20px;
 `
 
+let commentlist = [
+    {id: 1, profileimg: profileimg, name: '댓글1작성자', label: label_moon, comment_txt: '저도 곧 네덜란드 가는데 운하 보트투어 꼭 해야겠어요~~'},
+    {id: 2, profileimg: profileimg, name: '댓글2작성자', label: label_blackhole, comment_txt: '라이든 이쁘당'}
+];
+
 const DetailPage = () => {
     const [isBM, setIsBM] = useState(false);
     const [input, setInput] = useState('');
@@ -247,7 +254,14 @@ const DetailPage = () => {
                             </CommentBMDiv>
                         </CommentBMLine>
                         <CommentField>
-
+                            {commentlist && commentlist.map(commentlist => (
+                                <Comment
+                                    profileimg={commentlist.profileimg}
+                                    name={commentlist.name}
+                                    label={commentlist.label}
+                                    comment_txt={commentlist.comment_txt}
+                                />
+                            ))}
                         </CommentField>
                         <InputLine>
                             <Input 

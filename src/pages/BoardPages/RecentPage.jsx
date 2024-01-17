@@ -13,6 +13,7 @@ import bookmark from '../../images/bookmark.svg';
 import comment from '../../images/comment.svg';
 import profileimg from '../../images/dummyprofileimg.png';
 import { useNavigate } from 'react-router-dom';
+import WriteBtn from '../../components/WriteBtn';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -230,6 +231,7 @@ const RecentPage = () => {
                         </MyDiv>
                     </MyInfoBox>
                 </InfoContainer>
+            
             </Body>
         </>
     );

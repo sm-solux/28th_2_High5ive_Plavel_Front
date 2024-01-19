@@ -8,6 +8,11 @@ import RecentPage from './pages/BoardPages/RecentPage';
 import HotPage from './pages/BoardPages/HotPage';
 import DetailPage from './pages/BoardPages/DetailPage';
 import WritePage from './pages/BoardPages/WritePage';
+import MyResultPage from './pages/MyPages/MyResultPage';
+import MyWritePage from './pages/MyPages/MyWritePage';
+import MyCommentPage from './pages/MyPages/MyCommentPage';
+import MyBookmarkPage from './pages/MyPages/MyBookmarkPage';
+import MyInfoPage from './pages/MyPages/MyInfoPage';
 
 function App() {
   return (
@@ -23,6 +28,12 @@ function App() {
         <Route path='/hot' element={<HotPage/>}/>
         <Route path='/detail/:id' element={<DetailPage/>}/>
         <Route path='/write' element={<WritePage/>}/>
+
+        <Route path='/myresult' element={<MyResultPage/>}/>
+        <Route path='/mywrite' element={<MyWritePage/>}/>
+        <Route path='/mycomment' element={<MyCommentPage/>}/>
+        <Route path='/mybookmark' element={<MyBookmarkPage/>}/>
+        <Route path='/myinfo' element={<MyInfoPage/>}/>
         
       </Routes>
     </>

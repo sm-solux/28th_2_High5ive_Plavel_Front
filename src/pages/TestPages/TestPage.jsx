@@ -1,10 +1,9 @@
 import React from 'react';
+import Test from '../../components/Test';
 
 const TestPage = () => {
     return (
-        <div>
-            테스트 페이지
-        </div>
+        <Test/>
     );
 };
 

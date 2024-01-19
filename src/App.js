@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/LandingPage';
 import SignupPage from './pages/SignupPage';
+import TestPage from './pages/TestPages/TestPage';
 import HomePage from './pages/BoardPages/HomePage';
 import RecentPage from './pages/BoardPages/RecentPage';
 import HotPage from './pages/BoardPages/HotPage';
@@ -14,6 +15,8 @@ function App() {
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
+
+        <Route path='/test' element={<TestPage/>}/>
 
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/recent' element={<RecentPage/>}/>

@@ -37,7 +37,7 @@ const MyBar = () => {
         <Wrapper>
             <TabDiv>
                 <Tab onClick={() => {navigate('/myresult')}} style={{color: location.pathname === '/myresult'? '#262626' : ''}}>테스트 결과</Tab>
-                <Tab onClick={() => {navigate('/mywrite')}} style={{color: location.pathname === '/mywrtie'? '#262626' : ''}}>내가 쓴 글</Tab>
+                <Tab onClick={() => {navigate('/mywrite')}} style={{color: location.pathname === '/mywrite'? '#262626' : ''}}>내가 쓴 글</Tab>
                 <Tab onClick={() => {navigate('/mycomment')}} style={{color: location.pathname === '/mycomment'? '#262626' : ''}}>댓글 단 글</Tab>
                 <Tab onClick={() => {navigate('/mybookmark')}} style={{color: location.pathname === '/mybookmark'? '#262626' : ''}}>북마크한 글</Tab>
                 <Tab onClick={() => {navigate('/myinfo')}} style={{color: location.pathname === '/myinfo'? '#262626' : ''}}>회원정보</Tab>

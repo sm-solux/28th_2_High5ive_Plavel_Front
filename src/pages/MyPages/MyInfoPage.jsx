@@ -7,13 +7,14 @@ const Body = styled.div`
     margin-top: 10vh;
 `
 
+
 const MyInfoPage = () => {
     return (
         <>
             <TopBar/>
             <MyBar/>
             <Body>
-                나의 정보
+                
             </Body>
         </>
     );

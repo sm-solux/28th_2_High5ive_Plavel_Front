@@ -191,37 +191,9 @@ const Test = () => {
     return answerElements;
   };
 
-  const begin = () => {
-    const main = document.querySelector("#main");
-    const qna = document.querySelector("#qna");
-
-    qna.style.display = "none";
-      
-    main.style.WebkitAnimation = "fadeOut 1s";
-    main.style.animation = "fadeOut 1s";
-      
-    setTimeout(() => {
-      main.style.display = "none";
-      qna.style.display = "block";
-      qna.style.WebkitAnimation = "fadeIn 1s";
-      qna.style.animation = "fadeIn 1s";
-    }, 10); 
-  };
-
   return (
     <div>
       <div>
-        {/* 초기화면 section */}
-        <section id="main">
-          <div>
-            여행 행성 PLAVEL에 도착한 여러분, 환영합니다.
-          </div>
-          <button
-            onClick={begin}
-          >
-            테스트 시작
-          </button>
-        </section>
 
         {/* 질문화면 section */}
         <section id="qna" >

@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from './pages/LandingPage';
 import SignupPage from './pages/SignupPage';
 import TestPage from './pages/TestPages/TestPage';
+import TestResultPage from './pages/TestPages/TestResultPage';
 import HomePage from './pages/BoardPages/HomePage';
 import RecentPage from './pages/BoardPages/RecentPage';
 import HotPage from './pages/BoardPages/HotPage';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/signup' element={<SignupPage/>}/>
 
         <Route path='/test' element={<TestPage/>}/>
+        <Route path='/testresult' element={<TestResultPage/>}/>
 
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/recent' element={<RecentPage/>}/>

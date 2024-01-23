@@ -87,165 +87,159 @@ const qnaList = [
 
 const Test = () => {
 
-    const endPoint = 11;
-    const [select, setSelect] = useState(Array(8).fill(0));
-    const [qIdx, setQIdx] = useState(0);
-    const [question, setQuestion] = useState(null);
-    const [answers, setAnswers] = useState([]);
-    const [results, setResults] = useState([]);
+  const endPoint = 11;
+  const [select, setSelect] = useState(Array(8).fill(0));
+  const [qIdx, setQIdx] = useState(0);
+  const [question, setQuestion] = useState(null);
+  const [answers, setAnswers] = useState([]);
+  const [results, setResults] = useState([]);
 
-    const calResult = () => {
-        console.log("final select:", select);
-        const max = Math.max(...select);
-        const maxIndex = select.indexOf(max);
-        console.log("result", maxIndex);
-        return maxIndex;
-    };
+  const calResult = () => {
+    const randomIndex = Math.floor(Math.random() * select.length);
+    const randomValue = select[randomIndex];
+      
+    //console.log("random value:", randomValue);
+      
+    const max = Math.max(...select);
+    const maxIndex = select.indexOf(max);
+      
+    console.log("result:", maxIndex);
+      
+    return maxIndex;
+  };
     
-    const setResult = () => {
-        const points = calResult();
-        console.log(infoList[points]);
-        setResults(infoList[points])
-    };
+  const setResult = () => {
+    const points = calResult();
+    const resultValue = infoList[points];
+    console.log(resultValue);
+    setResults(resultValue);
 
-    const goResult = () => {
-        const qna = document.querySelector("#qna");
-        const result = document.querySelector("#result");
+    const url = new URL("/testresult", window.location.href);
+    url.searchParams.set("result", resultValue);
+  
+    // TestResultPage로 페이지 이동
+    window.location.href = url.href;
+  };
 
-        qna.style.WebkitAnimation = "fadeOut 1s";
-        qna.style.animation = "fadeOut 1s";
+  const goResult = () => {
+    const qna = document.querySelector("#qna");
 
-        setTimeout(() => {
-        result.style.WebkitAnimation = "fadeIn 1s";
-        result.style.animation = "fadeIn 1s";
+    qna.style.WebkitAnimation = "fadeOut 1s";
+    qna.style.animation = "fadeOut 1s";
 
-        setTimeout(() => {
-            qna.style.display = "none";
-            result.style.display = "block";
-        }, 10);
-        setResult();
-        }, 10);
-    };
+    setTimeout(() => {
+      setResult();
+    }, 10);
+  };
 
-    useEffect(() => { 
-        if (qIdx === endPoint) {
+  useEffect(() => { 
+      if (qIdx === endPoint) {
         goResult(); 
-        } else {
+      } else {
         const q = qnaList[qIdx].q;
         const answerElements = qnaList[qIdx].a.map((answer, idx) =>
-            addAnswer(answer.answer, qIdx, idx)
-        );
+          addAnswer(answer.answer, qIdx, idx)
+      );
 
-        setQuestion(q);
-        setAnswers(answerElements);
-        const status = document.querySelector(".statusBar");
-        status.style.width = `${(100 / endPoint) * (qIdx + 1)}%`;
-        }
-    }, [qIdx]);
+      setQuestion(q);
+      setAnswers(answerElements);
+      const status = document.querySelector(".statusBar");
+      status.style.width = `${(100 / endPoint) * (qIdx + 1)}%`;
+      }
+  }, [qIdx]);
 
-    const addAnswer = (answerText, qIdx, idx) => {
-        const handleClick = () => {
-        const target = qnaList[qIdx].a[idx].type;
-        const updatedSelect = [...select];
-        for (let i = 0; i < target.length; i++) {
-            updatedSelect[target[i]] += 1;
-        }
+  const addAnswer = (answerText, qIdx, idx) => {
+    const handleClick = () => {
+      const target = qnaList[qIdx].a[idx].type;
+      const updatedSelect = [...select];
+      for (let i = 0; i < target.length; i++) {
+        updatedSelect[target[i]] += 1;
+      }
 
-        setSelect(updatedSelect);
-        console.log("Updated Select:", updatedSelect);
+      setSelect(updatedSelect);
+      console.log("Updated Select:", updatedSelect);
 
-        goNext(qIdx + 1);
-        };
-
-        return (
-        <button
-            key={idx}
-            onClick={handleClick}
-        >
-            {answerText}
-        </button>
-        );
-    };
-
-    const goNext = (qIdx) => {
-        if (qIdx === endPoint) {
-            goResult();
-            return;
-        }
-
-        const q = document.querySelector(".qBox");
-        q.innerHTML = qnaList[qIdx].q;
-        const answerElements = qnaList[qIdx].a.map((answer, idx) =>
-        addAnswer(answer.answer, qIdx, idx)
-        );
-
-        const status = document.querySelector(".statusBar");
-        status.style.width = `${(100 / endPoint) * (qIdx + 1)}%`;
-
-        setQIdx(qIdx);
-        return answerElements;
-    };
-
-    const begin = () => {
-        const main = document.querySelector("#main");
-        const qna = document.querySelector("#qna");
-
-        qna.style.display = "none";
-      
-        main.style.WebkitAnimation = "fadeOut 1s";
-        main.style.animation = "fadeOut 1s";
-      
-        setTimeout(() => {
-          main.style.display = "none";
-          qna.style.display = "block";
-          qna.style.WebkitAnimation = "fadeIn 1s";
-          qna.style.animation = "fadeIn 1s";
-        }, 10); 
-    };
-
-    const redirectToHomepage = () => {
-        window.location.href = "/home";
+      goNext(qIdx + 1);
     };
 
     return (
-        <div>
-            <div>
-                {/* 초기화면 section */}
-                <section id="main">
-                    <div>
-                        여행 행성 PLAVEL에 도착한 여러분, 환영합니다.
-                    </div>
-                    <button
-                        onClick={begin}
-                    >
-                        테스트 시작
-                    </button>
-                </section>
+      <button
+        key={idx}
+        onClick={handleClick}
+      >
+        {answerText}
+      </button>
+      );
+  };
 
-                {/* 질문화면 section */}
-                <section id="qna" >
-                    <div className="qBox py-3 mt-4 mx-auto">
-                        {question}
-                    </div>
-                    <div className="answerBox">
-                        {answers}
-                    </div>
-                    <div className="status mx-auto mt-7">
-                    <div className="statusBar"></div>
-                    </div>
-                </section>
+  const goNext = (qIdx) => {
+    if (qIdx === endPoint) {
+      goResult();
+      return;
+    }
 
-                {/* 결과화면 section */}
-                <section id="result" className="mx-auto my-5 py-5 px-3">
-                    <h1>당신의 여행 유형은?</h1>
-                    <div className="resultBox">
-                        {results}
-                    </div>
-                    <button onClick={redirectToHomepage}>나와 비슷한 유형들 찾아보기</button>
-                </section>
-            </div>
-        </div>
+    const q = document.querySelector(".qBox");
+    q.innerHTML = qnaList[qIdx].q;
+    const answerElements = qnaList[qIdx].a.map((answer, idx) =>
+      addAnswer(answer.answer, qIdx, idx)
     );
+
+    const status = document.querySelector(".statusBar");
+    status.style.width = `${(100 / endPoint) * (qIdx + 1)}%`;
+
+    setQIdx(qIdx);
+    return answerElements;
+  };
+
+  const begin = () => {
+    const main = document.querySelector("#main");
+    const qna = document.querySelector("#qna");
+
+    qna.style.display = "none";
+      
+    main.style.WebkitAnimation = "fadeOut 1s";
+    main.style.animation = "fadeOut 1s";
+      
+    setTimeout(() => {
+      main.style.display = "none";
+      qna.style.display = "block";
+      qna.style.WebkitAnimation = "fadeIn 1s";
+      qna.style.animation = "fadeIn 1s";
+    }, 10); 
+  };
+
+  return (
+    <div>
+      <div>
+        {/* 초기화면 section */}
+        <section id="main">
+          <div>
+            여행 행성 PLAVEL에 도착한 여러분, 환영합니다.
+          </div>
+          <button
+            onClick={begin}
+          >
+            테스트 시작
+          </button>
+        </section>
+
+        {/* 질문화면 section */}
+        <section id="qna" >
+          <div className="qBox py-3 mt-4 mx-auto">
+            {question}
+          </div>
+          <div className="answerBox">
+            {answers}
+          </div>
+          <div className="status mx-auto mt-7">
+            <div className="statusBar"></div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+  );
 };
 
 export default Test;

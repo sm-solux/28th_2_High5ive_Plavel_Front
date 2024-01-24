@@ -1,5 +1,12 @@
 import React from 'react';
 
+const infoList = [
+    {
+        
+    },
+]
+
+
 const TestResult = ({ result }) => {
     return (
         <div>

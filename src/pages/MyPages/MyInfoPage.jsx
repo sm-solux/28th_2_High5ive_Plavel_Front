@@ -26,6 +26,12 @@ const Info = styled.div`
     color: #878787;
     font-size: 20px;
     font-weight: 600;
+    width: 800px;
+`
+const ProfileImg = styled.img`
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
 `
 
 let info = [
@@ -74,7 +80,7 @@ const MyInfoPage = () => {
                     </Line>
                     <Line>
                         <Title>프로필 사진</Title>
-                        
+                        <ProfileImg src={info.profileimg}/>
                     </Line>
                     </>
                     ))}

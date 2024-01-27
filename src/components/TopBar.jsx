@@ -71,7 +71,7 @@ const TopBar = () => {
                         인기 글</Tab>
                 </TabDiv>
             </LogoTabDiv>
-            <MyTab style={{color: location.pathname === '/my'? '#6695F1' : '#262626'}}>
+            <MyTab onClick={() => navigate("/myresult")} style={{color: location.pathname.startsWith('/my')?'#6695F1' : '#262626'}}>
                 마이페이지
                 <MyIcon src={mylogo}/>
             </MyTab>

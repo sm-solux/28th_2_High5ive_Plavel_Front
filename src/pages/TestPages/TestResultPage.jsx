@@ -1,5 +1,16 @@
 import React, { useEffect ,useState} from 'react';
+import styled from 'styled-components';
 import TestResult from '../../components/TestResult';
+
+const Background = styled.div`
+  background: linear-gradient(#253149, #323691);
+  width: 100vw; 
+  height: 100vh;
+
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+`;
 
 const TestResultPage = () => {
     const [resultValue, setResultValue] = useState(null);
@@ -14,9 +25,9 @@ const TestResultPage = () => {
     }, []);
 
     return (
-        <div>
+        <Background>
             <TestResult result={resultValue} />
-        </div>
+        </Background>
     );
 };
 

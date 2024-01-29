@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     margin: 50px 0 50px 100px;
 `
 const TabDiv = styled.div`
-
+    
 `
 const Tab = styled.div`
     color: #808080;
@@ -22,6 +22,7 @@ const Tab = styled.div`
     font-weight: 600;
     margin-bottom: 50px;
     cursor: pointer;
+
     &:hover {
         color: #262626;
         font-size: 25.5px;
@@ -38,7 +39,8 @@ const MyPage = styled.div`
     top: calc(10vh + 20px);
 `
 const MyBarDiv = styled.div`
-    
+    position: absolute;
+    z-index: 2;
 `
 
 const MyBar = () => {

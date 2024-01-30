@@ -61,7 +61,7 @@ const TopBar = () => {
     return (
         <Wrapper>
             <LogoTabDiv>
-                <Logo src={logo}/>
+                <Logo src={logo} onClick={() => navigate("/")}/>
                 <TabDiv>
                     <Tab onClick={() => navigate("/home")} style={{color: location.pathname === '/home'? '#6695F1' : '#262626'}}>
                         홈</Tab>

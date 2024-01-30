@@ -256,7 +256,7 @@ const TestButton = styled.button`
     padding: 15px 25px;
     margin: 5px;
     width: 300px;
-    font-size: 20px;
+    font-size: 25px;
 
     &:hover {
       background-color: #5880cf;

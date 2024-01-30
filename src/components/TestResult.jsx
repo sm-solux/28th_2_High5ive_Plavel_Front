@@ -193,6 +193,7 @@ const Load = styled.h3`
     margin-bottom: 10px;
     display: flex;
     color: white;
+    font-size: 25px;
 `;
 
 const LoadImage = styled.img`
@@ -203,6 +204,7 @@ const Circle = styled.img`
     position: absolute;
     top: 0;
     left: 0;
+    width: 600px;
 `;
 
 const Circle2 = styled.img`
@@ -226,6 +228,8 @@ const Circle4 = styled.img`
 
 const Name = styled.h2`
     color: white;
+    font-size: 30px;
+    margin-bottom: 50px;
 `;
 const ParentContainer = styled.div`
     display: flex;
@@ -249,17 +253,18 @@ const SecondContainer = styled.div`
 
 const Image = styled.img`
     width: 380px;
-    margin-right: 20px;
+    margin-right: 100px;
 
     z-index: 1;
 `;
 
 const Type = styled.h1`
     margin-right: 10px;
+    font-size: 40px;
 `;
 
 const SubTitle = styled.div`
-    font-size: 20px;
+    font-size: 30px;
     margin-bottom: 0;
 `;
 
@@ -276,6 +281,7 @@ const LabelImage = styled.img`
 const Description = styled.div`
     margin-right: 5px;
     margin-left: 5px;
+    font-size: 20px;
 `;
 
 const SecondChild = styled.div`
@@ -309,7 +315,8 @@ const InfoType = styled.div`
 `;
 
 const InfoImage = styled.img`
-    width: 90px;
+    width: 100px;
+    height: 100%;
 `;
 
 const InfoSubtitle = styled.div`
@@ -344,7 +351,7 @@ const Button = styled.button`
     
     color: white;
     background: #6063A5;
-    font-size: 15px;
+    font-size: 20px;
 
     display: flex;
     align-items: center;

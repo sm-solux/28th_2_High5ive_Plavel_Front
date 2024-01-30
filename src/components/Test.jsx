@@ -80,7 +80,7 @@ const qnaList = [
     {
       q: "내가 선호하는 여행지 음식점 유형은?",
       a: [
-        { answer: "현지에 왔으면 현지 음식을 먹어봐야지, 현지 최적화 식당", type: [0,2,4] },
+        { answer: "현지에 왔으면 현지 음식을 먹어봐야지,\n 현지 최적화 식당", type: [0,2,4] },
         { answer: "현지 음식은 별로.. 내 취향의 음식점", type: [7] }
       ],
       img: nine
@@ -184,7 +184,7 @@ const Test = () => {
     };
 
     return (
-        <TestButton
+      <TestButton
         key={idx}
         onClick={handleClick}
       >
@@ -215,47 +215,48 @@ const Test = () => {
   };
 
   return (
-    <div>
-      <div>
+    <>
+      <Container>
         {/* 질문화면 section */}
-        <Text>
-          {qIdx+1}
-        </Text>
-        <Status className="status mx-auto mt-7">
+        <Number>{qIdx+1}</Number>
+        <Status className="status">
           <StatusBar className="statusBar"></StatusBar>
         </Status>
         <section id="qna" >
-          <Text className="qBox">
-            {question}
-          </Text>
-          <img 
-            className="questionImage" 
-            src={image} 
-            style={{ width: '200px', height: '200px',  display: 'block', margin: '0 auto'}}
-          />
+          <Text className="qBox">{question}</Text>
+          <Image src={image}/>
           <ButtonContainer>
             {answers}
           </ButtonContainer>
         </section>
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 
 export default Test;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+const Image = styled.img`
+    width: 250px;
+    display: block;
+    margin: 30px auto;
+`;
 
 const TestButton = styled.button`
     background-color: #6695F1;
     color: white;
     border-radius: 50px;
     border: none;
-    padding: 10px 25px;
+    padding: 15px 25px;
     margin: 5px;
     width: 300px;
-
-    display: flex;
-    align-items: center; /* 세로 가운데 정렬 */
-    justify-content: center; /* 가로 가운데 정렬 */
+    font-size: 20px;
 
     &:hover {
       background-color: #5880cf;
@@ -263,24 +264,32 @@ const TestButton = styled.button`
 `;
 
 const ButtonContainer = styled.div`
-  display: grid;
-  place-items: center; /* 세로와 가로 정렬 */
-  height: 10vh;
+    display: grid;
+    place-items: center;
+    height: 10vh;
 `;
+
+const Number = styled.div`
+    color: white;
+    margin: -50px 10px 30px 10px;
+    text-align: center;
+    text-size: 50px;
+`
 
 const Text = styled.div`
     color: white;
     margin: 10px;
     margin-bottom: 0px;
     text-align: center;
+    text-size: 30px;
 `
 
 const Status = styled.div`
     height: 10px;
-    width: 450px;
+    width: 600px;
     background-color: #9A9797;
     border-radius: 20px;
-    margin: 10px;
+    margin: 0 10px;
 `
 
 const StatusBar = styled.div`

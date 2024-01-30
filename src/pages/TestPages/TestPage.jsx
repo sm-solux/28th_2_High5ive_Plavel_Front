@@ -7,7 +7,9 @@ const TestButton = styled.button`
   color: white;
   border-radius: 50px;
   border: none;
-  padding: 10px 25px;
+  padding: 10px 30px;
+  margin-top: 10px;
+  font-size: 20px;
 
   &:hover {
     background-color: #5880cf;
@@ -23,6 +25,7 @@ const Background = styled.div`
   background: linear-gradient(#253149, #323691);
   width: 100vw; 
   height: 100vh;
+  font-size: 30px;
 
   display: flex; 
   align-items: center; 

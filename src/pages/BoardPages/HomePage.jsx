@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import Banner from '../../components/Banner';
@@ -15,6 +15,14 @@ import bookmark from '../../images/bookmark.svg';
 import comment from '../../images/comment.svg';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
+import GoogleMapReact from 'google-map-react';
+import {CssBaseline, Grid} from '@material-ui/core';
+import Map from '../../components/Map/Map';
+import List from '../../components/List/List';
+
+import { getPlacesData } from '../../api/travelAdvisorAPI';
+import Header from '../../components/Header/Header';
+import axios from 'axios';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -40,8 +48,8 @@ const ListContainer = styled.div`
     margin-top: 20px;
     margin-bottom: 60px;
 `
-const List = styled.div`
-    width: 45%;
+const HotList = styled.div`
+    width: 47%;
     border-radius: 20px;
     border: 1px solid #E9E9E9;
     background: #F9F9F9;
@@ -110,24 +118,18 @@ const Bookmark = styled.div`
     font-weight: 600;
     margin-left: 5px;
 `
+const MapDiv = styled.div`
+    width: '700px';
+    height: '700px';
+    border-radius: '20px';
+    margin-left: '60px';
+    margin-top: '10px';
+`
 
 let list = [
     {id: 1, title: '첫번째 글', detail: '첫번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_blackhole, date: '2024/01/10 21:25', comment: 2, bookmark: 20},
     {id: 2, title: '두번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_comet, date: '2024/01/10 21:25', comment: 10, bookmark: 2},
 ];  
-
-const containerStyle = {
-    width: '700px',
-    height: '700px',
-    borderRadius: '20px',
-    marginLeft: '60px',
-    marginTop: '10px'
-  };
-  
-  const center = {
-    lat: 14.018000,
-    lng: 120.835941
-  };
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -135,6 +137,74 @@ const HomePage = () => {
         const listId = e.target.id;
         navigate(`/detail/${listId}`);
     }
+
+    // 연동코드
+    // const getHotList = () => {
+    //     axios.get('http://127.0.0.1:8000/board/home')
+    //     .then(res => {
+    //         console.log(res);
+    //     })
+    //     .catch(err => {
+    //         console.error('Error get hotlist: ', err)
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     getHotList();
+    // }, []);
+
+    const [type, setType] = useState('restaurants');
+    const [rating, setRating] = useState('');
+
+    const [coords, setCoords] = useState({});
+    const [bounds, setBounds] = useState(null);
+
+    //const [weatherData, setWeatherData] = useState([]);
+    const [filteredPlaces, setFilteredPlaces] = useState([]);
+    const [places, setPlaces] = useState([]);
+
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [childClicked, setChildClicked] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+        setCoords({ lat: latitude, lng: longitude });
+        });
+    }, []);
+
+    useEffect(() => {
+        const filtered = places.filter((place) => Number(place.rating) > rating);
+
+        setFilteredPlaces(filtered);
+    }, [rating]);
+
+    useEffect(() => {
+        if (bounds) {
+        setIsLoading(true);
+
+        //   getWeatherData(coords.lat, coords.lng)
+        //     .then((data) => setWeatherData(data));
+
+        getPlacesData(type, bounds.sw, bounds.ne)
+            .then((data) => {
+            setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
+            setFilteredPlaces([]);
+            setRating('');
+            setIsLoading(false);
+            });
+        }
+    }, [bounds, type]);
+
+    const onLoad = (autoC) => setAutocomplete(autoC);
+
+    const onPlaceChanged = () => {
+        const lat = autocomplete.getPlace().geometry.location.lat();
+        const lng = autocomplete.getPlace().geometry.location.lng();
+
+        setCoords({ lat, lng });
+    };
+
     return (
         <>
             <TopBar/>
@@ -144,7 +214,7 @@ const HomePage = () => {
                 <HomeTitle>유용한 정보, 놓치지 마세요. 가장 핫한 글 🔥</HomeTitle>
                 <ListContainer>
                     {list && list.map(list => (
-                        <List key={list.id} id={list.id} onClick={handleClickList}>
+                        <HotList key={list.id} id={list.id} onClick={handleClickList}>
                             <Title id={list.id}>{list.title}</Title>
                             <Detail id={list.id}>{list.detail}</Detail>
                             <Line>
@@ -158,11 +228,11 @@ const HomePage = () => {
                                     <BMImg src={bookmark} id={list.id}/><Bookmark id={list.id}>{list.bookmark}</Bookmark>
                                 </CommentBM>
                             </Line>
-                        </List>
+                        </HotList>
                     ))}
                 </ListContainer>
                 <HomeTitle>내가 지금 떠나고 싶은 곳은?</HomeTitle>
-                <LoadScript
+                {/* <LoadScript
                     googleMapsApiKey="AIzaSyCcuPaFAa2xIlhGE4DKJMEDhI1EBYB32ZY"
                 >
                     <GoogleMap
@@ -172,7 +242,32 @@ const HomePage = () => {
                     >
                         <></>
                     </GoogleMap>
-                </LoadScript>
+                </LoadScript> */}
+                 <CssBaseline />
+                <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+                <Grid container spacing={3} style={{ width: '90%', marginLeft: '60px' }}>
+                    <Grid item xs={12} md={5}>
+                    <List
+                        isLoading={isLoading}
+                        childClicked={childClicked}
+                        places={filteredPlaces.length ? filteredPlaces : places}
+                        type={type}
+                        setType={setType}
+                        rating={rating}
+                        setRating={setRating}
+                    />
+                    </Grid>
+                    <Grid item xs={12} md={7} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Map
+                        setChildClicked={setChildClicked}
+                        setBounds={setBounds}
+                        setCoords={setCoords}
+                        coords={coords}
+                        places={filteredPlaces.length ? filteredPlaces : places}
+                        // weatherData={weatherData}
+                    />
+                    </Grid>
+                </Grid>
                 <WriteBtn/>
             </Body>
         </>

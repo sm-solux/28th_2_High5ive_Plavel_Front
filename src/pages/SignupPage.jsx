@@ -5,6 +5,7 @@ import airplane from '../images/signup_airplane.png';
 import logo from '../images/signup_logo.svg';
 import arrow from '../images/downarrow.svg';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Wrapper = styled.div`
     background: linear-gradient(#253149, #323691);
@@ -73,7 +74,7 @@ const FlexDiv = styled.div`
     display: flex;
     justify-content: space-between;
 `
-const SexBtn = styled.div`
+const GenderBtn = styled.div`
     border-radius: 15px;
     background: rgba(242, 242, 242, 0.23);
     color: #FFF;
@@ -188,7 +189,7 @@ const SignupPage = () => {
     const [password2, setPassword2] = useState('');
     const [pw2Message, setPw2Message] = useState('');
     const [name, setName] = useState('');
-    const [sex, setSex] = useState('');
+    const [gender, setGender] = useState('');
     const [birth, setBirth] = useState('');
     const [birthMessage, setBirthMessage] = useState('');
     const [nickname, setNickname] = useState('');
@@ -203,7 +204,7 @@ const SignupPage = () => {
     const [ispwform, setIspwform] = useState(false);
     const [pwcheck, setPwcheck] = useState(false);
     const [isname, setIsname] = useState(false);
-    const [issex, setIssex] = useState(false);
+    const [isgender, setIsgender] = useState(false);
     const [isbirth, setIsbirth] = useState(false);
     const [isnickname, setIsnickname] = useState(false);
     const [isintroduce, setIsintroduce] = useState(false);
@@ -268,9 +269,9 @@ const SignupPage = () => {
         setName(e.target.value);
         setIsname(true);
     }
-    const handleSex = (e) => {
-        setSex(e.target.id);
-        setIssex(true);
+    const handleGender = (e) => {
+        setGender(e.target.id);
+        setIsgender(true);
     }
     const onChangeBirth = (e) => {
         const currentBirth = e.target.value;
@@ -325,13 +326,32 @@ const SignupPage = () => {
             이메일: ${email}\n
             비밀번호: ${password}\n
             이름: ${name}\n
-            성별: ${sex}\n
+            성별: ${gender}\n
             생년월일: ${birth}\n
             닉네임: ${nickname}\n
             자기소개: ${introduce}\n
             프로필사진: ${imgFile}\n
             `
         )
+        axios.post('http://127.0.0.1:8000/sign/signup', {
+            user_d: id,
+            email: email,
+            user_pw: password,
+            username: name,
+            gender: gender,
+            birth_date: birth,
+            nickname: nickname,
+            bio: introduce,
+            profile_pic: imgFile
+        })
+        .then(res => {
+            alert("회원가입이 완료되었습니다.");
+            navigate('/test');
+            console.log(res);
+        })
+        .catch(error => {
+            console.error('Error handle signup: ', error);
+        });
     }
 
     return (
@@ -394,8 +414,8 @@ const SignupPage = () => {
                         <div style={{width: "45%"}}>
                             <Title>성별</Title>
                             <FlexDiv>
-                                <SexBtn id='male' onClick={handleSex} style={{backgroundColor: sex === 'male'? 'white' : '', color: sex === 'male'? 'black' : ''}}>남</SexBtn>
-                                <SexBtn id='female' onClick={handleSex} style={{backgroundColor: sex === 'female'? 'white' : '', color: sex === 'female'? 'black' : ''}}>여</SexBtn>
+                                <GenderBtn id='male' onClick={handleGender} style={{backgroundColor: gender === 'male'? 'white' : '', color: gender === 'male'? 'black' : ''}}>남</GenderBtn>
+                                <GenderBtn id='female' onClick={handleGender} style={{backgroundColor: gender === 'female'? 'white' : '', color: gender === 'female'? 'black' : ''}}>여</GenderBtn>
                             </FlexDiv>
                         </div>
                     </FlexDiv>

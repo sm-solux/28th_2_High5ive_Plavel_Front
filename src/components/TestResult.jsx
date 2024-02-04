@@ -39,7 +39,7 @@ const infoList = [
         img: icon_whitehole,
         sub_title: "계획 자판기",
         detail: "꼼꼼한 계획 세우기와 철저한 정보 수집으로 가이드 역할에 최적화된 여행자이시군요!",
-        positive: 2,
+        positive: 6,
         negative: 3
     },
     {
@@ -48,8 +48,8 @@ const infoList = [
         img: icon_earth,
         sub_title: "호기심 대마왕",
         detail: "많은 사람들과의 만남을 즐기고 다양한 경험을 선호하는 여행자이시군요!",
-        positive: 3,
-        negative: 4
+        positive: 4,
+        negative: 7
     },
     {
         id: 3,
@@ -57,8 +57,8 @@ const infoList = [
         img: icon_saturn,
         sub_title: "힐링 최고! 감성적인 사진가",
         detail: "바쁜 일상에서 벗어나 경치를 구경하며 예쁜 사진을 찍는 것을 즐기는 여유로운 여행자이시군요!",
-        positive: 4,
-        negative: 5
+        positive: 5,
+        negative: 1
     },
     {
         id: 4,
@@ -66,8 +66,8 @@ const infoList = [
         img: icon_sun,
         sub_title: "맛집 탐방가",
         detail: "다양한 현지 맛집을 찾아다니는 식도락 여행을 선호하는 여행자이시군요!",
-        positive: 5,
-        negative: 6
+        positive: 2,
+        negative: 5
     },
     {
         id: 5,
@@ -75,8 +75,8 @@ const infoList = [
         img: icon_comet,
         sub_title: "자유분방! 어디로든",
         detail: "도보 여행을 선호하며 자유롭게 이곳저곳 관광하는 것을 즐기는 여행자이시군요!",
-        positive: 6,
-        negative: 7
+        positive: 0,
+        negative: 4
     },
     {
         id: 6,
@@ -84,8 +84,8 @@ const infoList = [
         img: icon_jupiter,
         sub_title: "여행계의 보부상",
         detail: "모든 상황에 대비해 꼼꼼히 짐을 챙기는 여행자이시군요!",
-        positive: 7,
-        negative: 0
+        positive: 1,
+        negative: 5
     },
     {
         id: 7,
@@ -93,8 +93,8 @@ const infoList = [
         img: icon_moon,
         sub_title: "안전제일",
         detail: "안전을 가장 중요시하기 때문에 돌발 상황이 적은 안정적인 여행을 추구하는 여행자이시군요!",
-        positive: 0,
-        negative: 1
+        positive: 1,
+        negative: 2
     }
 ];
 
@@ -281,7 +281,7 @@ const LabelImage = styled.img`
 const Description = styled.div`
     margin-right: 5px;
     margin-left: 5px;
-    font-size: 20px;
+    font-size: 25px;
 `;
 
 const SecondChild = styled.div`
@@ -320,7 +320,7 @@ const InfoImage = styled.img`
 `;
 
 const InfoSubtitle = styled.div`
-    font-size: 11px;
+    font-size: 18px;
 
     margin: 0;
     margin-Bottom: 5px;
@@ -329,7 +329,7 @@ const InfoSubtitle = styled.div`
 
 const InfoName = styled.div`
     font-weight: bold;
-    font-size: 20px;
+    font-size: 23px;
 `;
 
 const Rocket = styled.img`

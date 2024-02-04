@@ -253,9 +253,9 @@ const TestButton = styled.button`
     color: white;
     border-radius: 50px;
     border: none;
-    padding: 15px 25px;
+    padding: 20px 25px;
     margin: 5px;
-    width: 300px;
+    width: 500px;
     font-size: 25px;
 
     &:hover {

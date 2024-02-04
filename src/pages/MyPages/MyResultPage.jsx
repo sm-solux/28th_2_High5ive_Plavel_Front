@@ -23,9 +23,6 @@ const Body = styled.div`
     margin-top: 10vh;
     padding-top: 55px;
     padding-left: 330px;
-    padding-right: 250px;
-
-    position: relative;
 `
 
 const infoList = [
@@ -44,7 +41,7 @@ const infoList = [
         img: icon_whitehole,
         sub_title: "계획 자판기",
         detail: "꼼꼼한 계획 세우기와 철저한 정보 수집으로 가이드 역할에 최적화된 여행자이시군요!",
-        positive: 2,
+        positive: 6,
         negative: 3
     },
     {
@@ -53,8 +50,8 @@ const infoList = [
         img: icon_earth,
         sub_title: "호기심 대마왕",
         detail: "많은 사람들과의 만남을 즐기고 다양한 경험을 선호하는 여행자이시군요!",
-        positive: 3,
-        negative: 4
+        positive: 4,
+        negative: 7
     },
     {
         id: 3,
@@ -62,8 +59,8 @@ const infoList = [
         img: icon_saturn,
         sub_title: "힐링 최고! 감성적인 사진가",
         detail: "바쁜 일상에서 벗어나 경치를 구경하며 예쁜 사진을 찍는 것을 즐기는 여유로운 여행자이시군요!",
-        positive: 4,
-        negative: 5
+        positive: 5,
+        negative: 1
     },
     {
         id: 4,
@@ -71,8 +68,8 @@ const infoList = [
         img: icon_sun,
         sub_title: "맛집 탐방가",
         detail: "다양한 현지 맛집을 찾아다니는 식도락 여행을 선호하는 여행자이시군요!",
-        positive: 5,
-        negative: 6
+        positive: 2,
+        negative: 5
     },
     {
         id: 5,
@@ -80,8 +77,8 @@ const infoList = [
         img: icon_comet,
         sub_title: "자유분방! 어디로든",
         detail: "도보 여행을 선호하며 자유롭게 이곳저곳 관광하는 것을 즐기는 여행자이시군요!",
-        positive: 6,
-        negative: 7
+        positive: 0,
+        negative: 4
     },
     {
         id: 6,
@@ -89,8 +86,8 @@ const infoList = [
         img: icon_jupiter,
         sub_title: "여행계의 보부상",
         detail: "모든 상황에 대비해 꼼꼼히 짐을 챙기는 여행자이시군요!",
-        positive: 7,
-        negative: 0
+        positive: 1,
+        negative: 5
     },
     {
         id: 7,
@@ -98,8 +95,8 @@ const infoList = [
         img: icon_moon,
         sub_title: "안전제일",
         detail: "안전을 가장 중요시하기 때문에 돌발 상황이 적은 안정적인 여행을 추구하는 여행자이시군요!",
-        positive: 0,
-        negative: 1
+        positive: 1,
+        negative: 2
     }
 ];
 
@@ -107,13 +104,32 @@ const List = [
     "블랙홀","화이트홀", "지구", "토성", "태양", "혜성", "목성", "달"
 ];
 
-/*백에서 결과 전달 받기*/
 const MyResultPage = () => {
     let result = 5;
 
+    /*const handleResult = () => {
+        //백에서 결과 전달 받기
+        axios.post('http://127.0.0.1:8000/mypage/my_test', 
+        {
+          result: result
+        }, {headers:{'XSRF-Token':Cookies.get('csrftoken')}})
+        .then(res => {
+          alert('나의 여행 성향은!',result);
+        })
+        .catch(err => {
+          console.error('나의 여행 성향을 받아올 수가 없습니다.', err);
+        })
+    };
+    
+    //이용자 이름 받아오기
+    const handleName = () => {
+
+    };*/
+
     const GotoTest = () => {
         window.location.href = '/test';
-    }
+    };
+
     return (
         <>
         <TopBar/>
@@ -210,8 +226,7 @@ const Image = styled.img`
     position: absolute;
     top: 0;
     right: 0;
-    margin: 3% 13% 0 0;
-    z-index: 1;
+    margin: 8% 13% 0 0;
 
     width: 17%;
 `

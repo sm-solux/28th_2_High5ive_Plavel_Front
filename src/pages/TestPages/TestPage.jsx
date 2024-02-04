@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import Test from '../../components/Test';
 
-const TestButton = styled.button`
+const StartButton = styled.button`
   background-color: #6695F1;
   color: white;
   border-radius: 50px;
   border: none;
-  padding: 10px 30px;
+  padding: 15px 35px;
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 25px;
 
   &:hover {
     background-color: #5880cf;
@@ -58,9 +58,9 @@ const TestPage = () => {
             여러분의 여행 성향 테스트를 시작하겠습니다.
             </Text>
             <ButtonContainer>
-              <TestButton onClick={handleStartTest}>
+              <StartButton onClick={handleStartTest}>
                 테스트 시작
-              </TestButton>
+              </StartButton>
             </ButtonContainer>
           </section>
         ) : (

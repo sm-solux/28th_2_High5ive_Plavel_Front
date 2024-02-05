@@ -334,15 +334,18 @@ const SignupPage = () => {
             `
         )
         axios.post('http://127.0.0.1:8000/sign/signup', {
-            user_d: id,
-            email: email,
+            user_id: id,
+            user_email: email,
             user_pw: password,
-            username: name,
-            gender: gender,
-            birth_date: birth,
-            nickname: nickname,
-            bio: introduce,
-            profile_pic: imgFile
+            user_pw2: password2,
+            user_name: name,
+            user_gender: gender,
+            user_birth_date: birth,
+            user_nickname: nickname,
+            user_bio: introduce,
+            user_profile_pic: imgFile,
+            user_type: 'Sun'
+
         })
         .then(res => {
             alert("회원가입이 완료되었습니다.");
@@ -414,8 +417,8 @@ const SignupPage = () => {
                         <div style={{width: "45%"}}>
                             <Title>성별</Title>
                             <FlexDiv>
-                                <GenderBtn id='male' onClick={handleGender} style={{backgroundColor: gender === 'male'? 'white' : '', color: gender === 'male'? 'black' : ''}}>남</GenderBtn>
-                                <GenderBtn id='female' onClick={handleGender} style={{backgroundColor: gender === 'female'? 'white' : '', color: gender === 'female'? 'black' : ''}}>여</GenderBtn>
+                                <GenderBtn id='m' onClick={handleGender} style={{backgroundColor: gender === 'm'? 'white' : '', color: gender === 'm'? 'black' : ''}}>남</GenderBtn>
+                                <GenderBtn id='f' onClick={handleGender} style={{backgroundColor: gender === 'f'? 'white' : '', color: gender === 'f'? 'black' : ''}}>여</GenderBtn>
                             </FlexDiv>
                         </div>
                     </FlexDiv>

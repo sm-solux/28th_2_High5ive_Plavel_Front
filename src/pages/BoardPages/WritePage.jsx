@@ -5,6 +5,7 @@ import TopBar from '../../components/TopBar';
 import photo from '../../images/photo.svg';
 import camera from '../../images/camera.svg';
 import arrow from '../../images/send.svg';
+import axios from 'axios';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -201,8 +202,19 @@ const WritePage = () => {
     };
 
     const handlePost = () => {
-        navigate('/home');
-    }
+        axios.post('http://127.0.0.1:8000/board/articles/', {
+            title : title,
+            content : content,
+        })
+        .then(res => {
+            alert("게시완료");
+            navigate('/home');
+            console.log(res);
+        })
+        .catch(error => {
+            console.error('Error handle post: ', error);
+        });
+    };
 
     return (
         <>

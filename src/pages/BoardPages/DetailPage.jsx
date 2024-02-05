@@ -18,7 +18,7 @@ import bookmark_on from '../../images/bookmark_on.svg';
 import send from '../../images/send.svg';
 import Comment from '../../components/Comment';
 import WriteBtn from '../../components/WriteBtn';
-import { useLocation } from 'react-router-dom';
+import { useLocation , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Rewrite from '../../components/Rewrite.jsx';
 
@@ -282,6 +282,7 @@ const DetailPage = () => {
     const [age, setAge] = useState('');
     const [isTrue, setIsTrue] = useState(false);
     const [showRewrite, setShowRewrite] = useState(false);
+    const navigate = useNavigate();
 
     const handleBM = (e) => {
         setIsBM(isBM => !isBM);
@@ -316,7 +317,7 @@ const DetailPage = () => {
 
     const handleBtn = (nickname) => {
         //글사용자와 현재 사용자의 닉네임이 같으면
-        if(nickname === "태양임"){
+        if(nickname === "눈송"){
             console.log("참");
             setIsTrue(true);
             return isTrue;
@@ -334,8 +335,9 @@ const DetailPage = () => {
     const deleteDetail = () => {
         const confirmDelete = window.confirm("진짜로 삭제하시겠습니까?");
 
-        axios.delete(`http://127.0.0.1:8000/board/articles/${postId}`)
+        axios.delete(`http://127.0.0.1:8000/board/articles/${postId}/`)
         .then(response => {
+            navigate('/home')
             console.log("게시물이 삭제되었습니다.");
         })
           .catch(error => {

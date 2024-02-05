@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState }  from 'react';
 import styled from 'styled-components';
 import label_sun from '../images/label/sun.svg';
@@ -22,6 +23,7 @@ import circle from '../images/3dicon_test/circle.png';
 import circle2 from '../images/3dicon_test/circle2.png';
 import circle3 from '../images/3dicon_test/circle3.png';
 import circle4 from '../images/3dicon_test/circle4.png';
+import { useMediaQuery } from "react-responsive";
 
 const infoList = [
     {
@@ -104,6 +106,7 @@ const List = [
 
 const TestResult = ({ result }) => {
     const [showResult, setShowResult] = useState(false);
+    const isDesktop = useMediaQuery({ minWidth: 750 });
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -120,6 +123,8 @@ const TestResult = ({ result }) => {
     }
     const GetResult = () => {
         return (
+            <>
+            {isDesktop?
             <>
                 <Circle src={circle}/>
                 <Name>@@@님의 여행 성향</Name>
@@ -161,6 +166,39 @@ const TestResult = ({ result }) => {
                         다양한 여행자를 만나러 가볼까?
                     </Button>
                 </ButtonContainer>
+                </>
+                :
+                <>
+                <MName>@@@님의 여행 성향</MName>
+                <MContainer>
+                    <MImage src={infoList[result].img} />
+                </MContainer>
+                <Mdiv>
+                    <MSubTitle>{infoList[result].sub_title}</MSubTitle>
+                    <MType>{List[result]}형 여행자</MType>
+                    <MLabelImage src={infoList[result].label} alt="레이블" />
+                    <MDescription>{infoList[result].detail}</MDescription>
+                </Mdiv>
+                <MThirdChild>
+                        <MInfoContainer>
+                            <MInfoType>나와 잘 맞는 여행자</MInfoType>
+                            <ImgDiv>
+                            <MInfoImage src={infoList[infoList[result].positive].img} />
+                            </ImgDiv>
+                            <MInfoSubtitle>{infoList[infoList[result].positive].sub_title}</MInfoSubtitle>
+                            <MInfoName>{List[infoList[result].positive]}형 여행자</MInfoName>
+                        </MInfoContainer>
+                        <MInfoContainer>
+                            <MInfoType>나와 안 맞는 여행자</MInfoType>
+                            <ImgDiv>
+                            <MInfoImage src={infoList[infoList[result].negative].img} />
+                            </ImgDiv>
+                            <MInfoSubtitle>{infoList[infoList[result].negative].sub_title}</MInfoSubtitle>
+                            <MInfoName>{List[infoList[result].negative]}형 여행자</MInfoName>
+                        </MInfoContainer>
+                </MThirdChild>
+                </>
+        }   
             </>
         );
     }
@@ -183,6 +221,106 @@ const TestResult = ({ result }) => {
 
 export default TestResult;
 
+const MInfoName = styled.div`
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+`
+
+const MInfoSubtitle = styled.div`
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
+`
+
+const ImgDiv = styled.div`
+    height: 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+`
+
+const MInfoImage = styled.img`
+    width: 15vw;
+    margin-top: 10px;
+`
+
+const MInfoType = styled.div`
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+`
+
+const MInfoContainer = styled.div`
+    text-align: center;
+`
+
+const MThirdChild = styled.div`
+    display: flex;
+    margin: 30px 50px;
+    justify-content: space-between;
+`
+
+const MDescription = styled.div`
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 20px;
+`
+
+const MLabelImage = styled.img`
+    width: 80px;
+    margin-top: 8px;
+`
+
+const MType = styled.div`
+    color: #FFF;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 5px;
+`
+
+const MSubTitle = styled.div`
+    color: #FFF;
+    font-size: 15px;
+    font-weight: 600;
+`
+
+const Mdiv = styled.div`
+    border-radius: 30px;
+    background: rgba(137, 148, 195, 0.13);
+    width: 260px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 30px;
+    text-align: center;
+`
+
+const MContainer = styled.div`
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+`
+
+const MImage = styled.img`
+    width: 50vw;
+    display: flex;
+    margin-top: 50px;
+
+`
+
+ const MName = styled.div`
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+ `
+
 const Loading = styled.div`
     display: flex;
     flex-direction: column;
@@ -193,11 +331,11 @@ const Load = styled.h3`
     margin-bottom: 10px;
     display: flex;
     color: white;
-    font-size: 25px;
+    font-size: 15px;
 `;
 
 const LoadImage = styled.img`
-
+    width: 100px;
 `;
 
 const Circle = styled.img`

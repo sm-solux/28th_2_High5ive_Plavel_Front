@@ -112,7 +112,7 @@ const MyResultPage = () => {
         axios.post('http://127.0.0.1:8000/mypage/my_test', 
         {
           result: result
-        }, {headers:{'XSRF-Token':Cookies.get('csrftoken')}})
+        })
         .then(res => {
           alert('나의 여행 성향은!',result);
         })

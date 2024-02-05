@@ -20,6 +20,7 @@ import Comment from '../../components/Comment';
 import WriteBtn from '../../components/WriteBtn';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import Rewrite from '../../components/Rewrite.jsx';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -200,6 +201,43 @@ const InfoTxt = styled.div`
     padding: 10px 20px;
 `
 
+const ModifyBtn = styled.button`
+    background: #50C56A;
+    color: white;
+    font-size: 17px;
+
+    margin-right: 10px;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+
+    &:hover {
+        background-color: #065D1F;
+    }
+`;
+
+const DeleteBtn = styled.button`
+    background: #E84E4E;
+    color: white;
+    font-size: 17px;
+
+    margin-left: 10px;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+
+    &:hover {
+        background-color: #9C0A0A;
+    }
+`;
+
+const BtnContainer = styled.div`
+    display: flex;
+    justify-content: right;
+    align-items: center;
+`;
+
+
 let commentlist = [
     {id: 1, profileimg: profileimg, name: '댓글1작성자', label: label_moon, comment_txt: '저도 곧 네덜란드 가는데 운하 보트투어 꼭 해야겠어요~~'},
     {id: 2, profileimg: profileimg, name: '댓글2작성자', label: label_blackhole, comment_txt: '라이든 이쁘당'}
@@ -242,6 +280,8 @@ const DetailPage = () => {
     const [img3url, setImg3url] = useState('');
     const [profile, setProfile] = useState('');
     const [age, setAge] = useState('');
+    const [isTrue, setIsTrue] = useState(false);
+    const [showRewrite, setShowRewrite] = useState(false);
 
     const handleBM = (e) => {
         setIsBM(isBM => !isBM);
@@ -263,6 +303,7 @@ const DetailPage = () => {
             setImg2url(serverDomain + imagePath);
             setImg3url(serverDomain + imagePath);
             setProfile(serverDomain + profpath);
+            handleBtn(res.data.author.nickname);
 
             console.log(2024 - parseInt(post.birth_date.substr(0, 4)));
 
@@ -273,15 +314,45 @@ const DetailPage = () => {
         })
     }
 
+    const handleBtn = (nickname) => {
+        //글사용자와 현재 사용자의 닉네임이 같으면
+        if(nickname === "태양임"){
+            console.log("참");
+            setIsTrue(true);
+            return isTrue;
+        }
+        console.log("거짓");
+        setIsTrue(false);
+        return isTrue;
+    }
+    
+    const modifyDetail = () => {
+        //수정 페이지
+        setShowRewrite(true);
+    }
+
+    const deleteDetail = () => {
+        const confirmDelete = window.confirm("진짜로 삭제하시겠습니까?");
+
+        axios.delete(`http://127.0.0.1:8000/board/articles/${postId}`)
+        .then(response => {
+            console.log("게시물이 삭제되었습니다.");
+        })
+          .catch(error => {
+            console.error("게시물 삭제에 실패했습니다:", error);
+        });
+    }
+
     useEffect(() => {
         console.log(state);
         getDetail();
+
     },[]);
 
     return (
         <>
             <TopBar/>
-            <Body>
+            {!showRewrite ? <Body>
                 <DetailContainer>
                     <Detail>
                         <FirstLine>
@@ -308,6 +379,12 @@ const DetailPage = () => {
                                 <HowMany style={isBM? {color:"#6695F1"} : {}}>{detail.bookmarks_count}</HowMany>
                             </CommentBMDiv>
                         </CommentBMLine>
+                        {isTrue ? (
+                        <BtnContainer>
+                            <ModifyBtn onClick={modifyDetail}>수정</ModifyBtn>
+                            <DeleteBtn onClick={deleteDetail}>삭제</DeleteBtn>
+                        </BtnContainer>
+                        ) : null}
                         <CommentField>
                             {commentlist && commentlist.map(commentlist => (
                                 <Comment
@@ -347,7 +424,7 @@ const DetailPage = () => {
                     </InfoBox>
                 </InfoContainer>
                 <WriteBtn/>
-            </Body>
+            </Body> : <Rewrite/>}
         </>
     );
 };

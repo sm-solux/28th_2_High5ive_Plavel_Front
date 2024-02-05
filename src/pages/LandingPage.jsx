@@ -167,10 +167,13 @@ const LandingPage = () => {
     {
       username: email,
       password : password
-    }, {headers:{'XSRF-Token':Cookies.get('csrftoken')}})
+    })
     .then(res => {
       alert('로그인 성공!');
       navigate('/home');
+      localStorage.setItem('token', res.data.token);
+      console.log(res);
+      console.log(localStorage.getItem('token'));
     })
     .catch(err => {
       console.error('login error', err);

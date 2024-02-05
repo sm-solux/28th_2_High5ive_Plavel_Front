@@ -51,6 +51,11 @@ const Detail = styled.div`
     font-size: 15px;
     font-weight: 600;
     margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
 `
 const Line = styled.div`
     display: flex;
@@ -198,13 +203,13 @@ const RecentPage = () => {
     }
 
     const getRecent = () => {
-        axios.get('http://127.0.0.1:8000/board/post_list', 
+        axios.get('http://127.0.0.1:8000/board/articles', 
         {
             headers:{'XSRF-Token':Cookies.get('csrftoken')}
         })
         .then(res => {
             console.log(res.data);
-            setRecent(res.data.posts);
+            setRecent(res.data.articles);
         })
         .catch(err => {
             console.error('get hotlist error', err);
@@ -238,12 +243,12 @@ const RecentPage = () => {
                             <Detail id={list.id}>{list.content}</Detail>
                             <Line>
                                 <InfoDiv>
-                                    <Label src={label[list.usertype]} id={list.id}/>
-                                    <Writer id={list.id}>{list.author}</Writer>
-                                    <Date id={list.id}>{list.updated_at}</Date>
+                                    <Label src={label[list.author_type]} id={list.id}/>
+                                    <Writer id={list.id}>{list.author_nickname}</Writer>
+                                    <Date id={list.id}>{list.created_at}</Date>
                                 </InfoDiv>
                                 <CommentBM>
-                                    <CommentImg src={comment} id={list.id}/><Comment id={list.id}>{list.comments_count}</Comment>
+                                    <CommentImg src={comment} id={list.id}/><Comment id={list.id}>{list.comment_count}</Comment>
                                     <BMImg src={bookmark} id={list.id}/><Bookmark id={list.id}>{list.bookmark_count}</Bookmark>
                                 </CommentBM>
                             </Line>

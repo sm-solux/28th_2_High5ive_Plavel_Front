@@ -240,6 +240,8 @@ const DetailPage = () => {
     const [img1url, setImg1url] = useState('');
     const [img2url, setImg2url] = useState('');
     const [img3url, setImg3url] = useState('');
+    const [profile, setProfile] = useState('');
+    const [age, setAge] = useState('');
 
     const handleBM = (e) => {
         setIsBM(isBM => !isBM);
@@ -249,18 +251,22 @@ const DetailPage = () => {
         setInput(e.target.value);
     }
     const getDetail = () => {
-        axios.get(`http://127.0.0.1:8000/board/post_detail/${postId}`)
+        axios.get(`http://127.0.0.1:8000/board/articles/${postId}`)
         .then(res => {
             console.log(res);
             setDetail(res.data);
-            setPost(res.data.post);
+            setPost(res.data.author);
             const serverDomain = 'http://127.0.0.1:8000';
-            const imagePath = res.data.post.image1;
-            const imagePath2 = res.data.post.image2;
-            const imagePath3 = res.data.post.image3;
+            const imagePath = res.data.image;
+            const profpath = res.data.author.profile_pic;
             setImg1url(serverDomain + imagePath);
             setImg2url(serverDomain + imagePath);
             setImg3url(serverDomain + imagePath);
+            setProfile(serverDomain + profpath);
+
+            console.log(2024 - parseInt(post.birth_date.substr(0, 4)));
+
+            setAge(2024 - parseInt(post.birth_date.substr(0, 4)));
         })
         .catch(err => {
             console.error('get detail error', err);
@@ -281,16 +287,16 @@ const DetailPage = () => {
                         <FirstLine>
                             <SmallProfileImg src={profileimg}/>
                             <ProfileDiv>
-                                <ProfName>{detail.nickname}</ProfName>
-                                <Date>{post.updated_at}</Date>
+                                <ProfName>{post.nickname}</ProfName>
+                                <Date>{detail.updated_at}</Date>
                             </ProfileDiv>
                         </FirstLine>
-                        <Title>{post.title}</Title>
-                        <Content>{post.content}</Content>
+                        <Title>{detail.title}</Title>
+                        <Content>{detail.content}</Content>
                         <ImgLine>
-                            {post.image1? <Img src={img1url}/> : <div></div>}
-                            {post.image2? <Img src={img2url}/> : <div></div>}
-                            {post.image3? <Img src={img3url}/> : <div></div>}
+                            {detail.image? <Img src={img1url}/> : <div></div>}
+                            {/* {detail.image2? <Img src={img2url}/> : <div></div>}
+                            {detail.image3? <Img src={img3url}/> : <div></div>} */}
                         </ImgLine>
                         <CommentBMLine>
                             <CommentBMDiv>
@@ -327,17 +333,17 @@ const DetailPage = () => {
                     <InfoBox>
                         <Text>글쓴이</Text>
                         <InfoDiv>
-                            <ProfileImg src={profileimg}/>
+                            <ProfileImg src={profile}/>
                             <MainInfo>
-                                <Age>{detail.age}세 / {gender[detail.gender]}</Age>
-                                <Name>{detail.nickname}</Name>
-                                <Label src={label[detail.usertype]}/>
+                                <Age>{age}세 / {gender[post.gender]}</Age>
+                                <Name>{post.nickname}</Name>
+                                <Label src={label[post.user_type]}/>
                             </MainInfo>
                         </InfoDiv>
                         <BlueTxt>여행 성향</BlueTxt>
-                        <InfoTxt>{sub_title[detail.usertype]}</InfoTxt>
+                        <InfoTxt>{sub_title[post.user_type]}</InfoTxt>
                         <BlueTxt>자기 소개</BlueTxt>
-                        <InfoTxt>{detail.bio}</InfoTxt>
+                        <InfoTxt>{post.bio}</InfoTxt>
                     </InfoBox>
                 </InfoContainer>
                 <WriteBtn/>

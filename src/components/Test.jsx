@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import one from '../images/3dicon_test/pencil.png';
@@ -11,6 +12,7 @@ import eight from '../images/3dicon_test/camera.png';
 import nine from '../images/3dicon_test/store.png';
 import ten from '../images/3dicon_test/pizza.png';
 import eleven from '../images/3dicon_test/chair.png';
+import { useMediaQuery } from "react-responsive";
 
 const qnaList = [
     {
@@ -114,6 +116,7 @@ const Test = () => {
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [image, setImage] = useState([]);
+  const isDesktop = useMediaQuery({ minWidth: 750 });
 
   const calResult = () => {
     const randomIndex = Math.floor(Math.random() * select.length);
@@ -184,12 +187,23 @@ const Test = () => {
     };
 
     return (
+      <>
+      {isDesktop?
       <TestButton
         key={idx}
         onClick={handleClick}
       >
         {answerText}
       </TestButton>
+      :
+      <MTestButton
+        key={idx}
+        onClick={handleClick}
+      >
+        {answerText}
+      </MTestButton>
+      }
+      </>
       );
   };
 
@@ -216,6 +230,7 @@ const Test = () => {
 
   return (
     <>
+    {isDesktop?
       <Container>
         {/* 질문화면 section */}
         <Number>{qIdx+1}</Number>
@@ -230,6 +245,22 @@ const Test = () => {
           </ButtonContainer>
         </section>
       </Container>
+      :
+      <MContainer>
+        {/* 질문화면 section */}
+        <MNumber>{qIdx+1}</MNumber>
+        <MStatus className="status">
+          <MStatusBar className="statusBar"></MStatusBar>
+        </MStatus>
+        <section id="qna" >
+          <MText className="qBox">{question}</MText>
+          <MImage src={image}/>
+          <MButtonContainer>
+            {answers}
+          </MButtonContainer>
+        </section>
+      </MContainer>
+      }
     </>
   );
 };
@@ -255,8 +286,10 @@ const TestButton = styled.button`
     border: none;
     padding: 20px 25px;
     margin: 5px;
-    width: 500px;
+    width: 600px;
     font-size: 25px;
+    cursor: pointer;
+    font-weight: 600;
 
     &:hover {
       background-color: #5880cf;
@@ -273,7 +306,8 @@ const Number = styled.div`
     color: white;
     margin: -50px 10px 30px 10px;
     text-align: center;
-    text-size: 50px;
+    font-size: 50px;
+    font-weight: 900;
 `
 
 const Text = styled.div`
@@ -281,18 +315,85 @@ const Text = styled.div`
     margin: 10px;
     margin-bottom: 0px;
     text-align: center;
-    text-size: 30px;
+    font-size: 30px;
+    font-weight: 600;
 `
 
 const Status = styled.div`
     height: 10px;
     width: 600px;
-    background-color: #9A9797;
+    background: rgba(236, 236, 236, 0.39);
     border-radius: 20px;
-    margin: 0 10px;
+    margin: 0 10px 30px 10px;
 `
 
 const StatusBar = styled.div`
+    height: 100%;
+    background: #FFFFFF;
+    border-radius: 20px;
+`
+
+const MContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+const MImage = styled.img`
+    width: 100px;
+    display: block;
+    margin: 30px auto;
+`;
+
+const MTestButton = styled.button`
+    background-color: #6695F1;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    padding: 20px 25px;
+    margin: 5px;
+    width: 300px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #5880cf;
+    }
+`;
+
+const MButtonContainer = styled.div`
+    display: grid;
+    place-items: center;
+    height: 10vh;
+`;
+
+const MNumber = styled.div`
+    color: white;
+    margin: -50px 10px 30px 10px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 900;
+`
+
+const MText = styled.div`
+    color: white;
+    margin: 10px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+`
+
+const MStatus = styled.div`
+    height: 10px;
+    width: 300px;
+    background: rgba(236, 236, 236, 0.39);
+    border-radius: 20px;
+    margin: 0 10px 30px 10px;
+`
+
+const MStatusBar = styled.div`
     height: 100%;
     background: #FFFFFF;
     border-radius: 20px;

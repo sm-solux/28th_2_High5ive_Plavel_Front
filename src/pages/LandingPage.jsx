@@ -41,6 +41,7 @@ const LoginButton = styled.button`
 
   &:hover {
     background-color: #5880cf;
+  }
 `;
 
 const SignUpButton = styled.button`
@@ -52,7 +53,7 @@ const SignUpButton = styled.button`
 
   &:hover {
     text-decoration: underline;
-  
+  }
 `;
 
 const EmailInput = styled.input`
@@ -164,8 +165,8 @@ const LandingPage = () => {
     console.log('로그인 시도:', email, password);
     axios.post('http://127.0.0.1:8000/sign/login', 
     {
-      user_id: email,
-      user_pw : password
+      username: email,
+      password : password
     }, {headers:{'XSRF-Token':Cookies.get('csrftoken')}})
     .then(res => {
       alert('로그인 성공!');

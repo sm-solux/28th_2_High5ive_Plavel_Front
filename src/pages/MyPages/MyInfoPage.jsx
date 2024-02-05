@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import MyBar from '../../components/MyBar';
@@ -12,7 +13,7 @@ const Body = styled.div`
     padding-left: 330px;
 `
 const InfoBox = styled.div`
-    margin: 70px 100px;
+    margin: 70px 100px 0px 100px;
 `
 const Line = styled.div`
     display: flex;
@@ -35,6 +36,27 @@ const ProfileImg = styled.img`
     width: 100px;
     height: 100px;
 `
+
+const LogoutBtn = styled.button`
+    background: #E84E4E;
+    color: white;
+    font-size: 20px;
+
+    margin: 0px 100px 100px 100px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+
+    &:hover {
+        background-color: #9C0A0A;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
 let info = [
     {name: '이예지', nickname: '데미소다', email: 'lee.yeji0327@sookmyung.ac.kr', sex: '여', birth: '2002.03.27',
@@ -62,6 +84,22 @@ const MyInfoPage = () => {
     useEffect(() => {
         getmyinfo();
     },[])
+  
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        console.log('로그아웃 클릭');
+        axios.get('http://127.0.0.1:8000/sign/logout')
+        .then(res => {
+          alert('로그아웃 성공!');
+          navigate('/'); 
+        })
+        .catch(err => {
+          console.error('로그아웃 실패', err);
+        })
+    };
+
+
     return (
         <>
             <TopBar/>
@@ -105,6 +143,9 @@ const MyInfoPage = () => {
                     </>
                     ))}
                 </InfoBox>
+                <ButtonContainer>
+                    <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
+                </ButtonContainer>
             </Body>
         </>
     );

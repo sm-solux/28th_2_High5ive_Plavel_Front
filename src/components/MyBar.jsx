@@ -40,7 +40,6 @@ const MyPage = styled.div`
 `
 const MyBarDiv = styled.div`
     position: absolute;
-    z-index: 2;
 `
 
 const MyBar = () => {

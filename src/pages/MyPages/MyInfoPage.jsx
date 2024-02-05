@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import MyBar from '../../components/MyBar';
 import profileimg from '../../images/dummyprofileimg.png';
+import axios from 'axios';
+import Cookies from 'js-cookie'
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -42,6 +44,24 @@ let info = [
 
 
 const MyInfoPage = () => {
+
+    const getmyinfo = () => {
+        axios.get('http://127.0.0.1:8000/mypage/my_info',
+        {
+            headers:{'XSRF-Token':Cookies.get('csrftoken')}
+    })
+    .then(res => {
+        console.log(res.data);
+        alert('받아오기 성공');
+    })
+    .catch(err => {
+        console.err('get myinfo error', err);
+    })
+    }
+
+    useEffect(() => {
+        getmyinfo();
+    },[])
     return (
         <>
             <TopBar/>

@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import profileimg from '../../images/dummyprofileimg.png';
-import label_blackhole from '../../images/label/blackhole.svg';
+import label_sun from '../../images/label/sun.svg';
+import label_jupiter from '../../images/label/jupiter.svg';
+import label_comet from '../../images/label/comet.svg';
+import label_earth from '../../images/label/earth.svg';
 import label_moon from '../../images/label/moon.svg';
+import label_saturn from '../../images/label/saturn.svg';
+import label_whitehole from '../../images/label/whitehole.svg';
+import label_blackhole from '../../images/label/blackhole.svg';
 import dummy1 from '../../images/dummy1.png';
 import dummy2 from '../../images/dummy2.png';
 import comment from '../../images/comment.svg';
@@ -12,6 +18,8 @@ import bookmark_on from '../../images/bookmark_on.svg';
 import send from '../../images/send.svg';
 import Comment from '../../components/Comment';
 import WriteBtn from '../../components/WriteBtn';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -197,9 +205,41 @@ let commentlist = [
     {id: 2, profileimg: profileimg, name: '댓글2작성자', label: label_blackhole, comment_txt: '라이든 이쁘당'}
 ];
 
+let label = {
+    'Jupiter': label_jupiter,
+    'Sun': label_sun,
+    'Comet': label_comet,
+    'Earth': label_earth,
+    'Moon': label_moon,
+    'Saturn': label_saturn,
+    'White': label_whitehole,
+    'Black': label_blackhole
+};
+let sub_title = {
+    'Jupiter': '여행계의 보부상, 목성형 여행자',
+    'Sun': "맛집 탐방가, 태양형 여행자",
+    'Comet': "자유분방! 어디로든, 혜성형 여행자",
+    'Earth': "호기심 대마왕, 지구형 여행자",
+    'Moon': "안전제일, 달형 여행자",
+    'Saturn': "힐링 최고! 감성적인 사진가, 토성형 여행자",
+    'White': "계획 자판기, 화이트홀형 여행자",
+    'Black': "무엇이든 OK!, 블랙홀형 여행자"
+}
+let gender = {
+    'M': '남',
+    'F': '여'
+};
+
 const DetailPage = () => {
+    const { state } = useLocation();
+    const postId = state;
     const [isBM, setIsBM] = useState(false);
     const [input, setInput] = useState('');
+    const [detail, setDetail] = useState([]);
+    const [post, setPost] = useState([]);
+    const [img1url, setImg1url] = useState('');
+    const [img2url, setImg2url] = useState('');
+    const [img3url, setImg3url] = useState('');
 
     const handleBM = (e) => {
         setIsBM(isBM => !isBM);
@@ -208,6 +248,29 @@ const DetailPage = () => {
     const onChangeInput = (e) => {
         setInput(e.target.value);
     }
+    const getDetail = () => {
+        axios.get(`http://127.0.0.1:8000/board/post_detail/${postId}`)
+        .then(res => {
+            console.log(res);
+            setDetail(res.data);
+            setPost(res.data.post);
+            const serverDomain = 'http://127.0.0.1:8000';
+            const imagePath = res.data.post.image1;
+            const imagePath2 = res.data.post.image2;
+            const imagePath3 = res.data.post.image3;
+            setImg1url(serverDomain + imagePath);
+            setImg2url(serverDomain + imagePath);
+            setImg3url(serverDomain + imagePath);
+        })
+        .catch(err => {
+            console.error('get detail error', err);
+        })
+    }
+
+    useEffect(() => {
+        console.log(state);
+        getDetail();
+    },[]);
 
     return (
         <>
@@ -218,31 +281,16 @@ const DetailPage = () => {
                         <FirstLine>
                             <SmallProfileImg src={profileimg}/>
                             <ProfileDiv>
-                                <ProfName>데미소다</ProfName>
-                                <Date>24/01/05 21:43</Date>
+                                <ProfName>{detail.nickname}</ProfName>
+                                <Date>{post.updated_at}</Date>
                             </ProfileDiv>
                         </FirstLine>
-                        <Title>제목이 이곳에</Title>
-                        <Content>이번 여름 방학에 다녀왔는데 네덜란드 6-7월 날씨가 무슨 쌀쌀한 가을 같아서 너무 추웠음
-                        반팔이랑 나시만 가져갔는데 무조건 걷옷 입어야되는 날씨여서 당황..
-                        네덜란드에서 3일동안 있었는데 3일 다 흐리고 바람이 불었습니다 그리고 얘기들어보니까 7월에는 우박 내리고 더 추워서 
-                        패딩 입는 사람들도 있었다고 함 갈 때 날씨 잘 찾아보고 가세용<br/><br/>
-
-                        암스테르담도 좋았지만 고즈넉한 네덜란드 분위기와 다양한 상점,카페를 즐기기에는 라이든 쪽이 더 좋았음
-                        관광객보다는 현지 사람들이 많이 다니는 동네 같았고 적당히 사람이 붐비는 곳이라 현지 분위기를 느끼고 싶은 사람들에게 추천
-                        그리고 라이든에 있는 마우리츠하위스 미술관 추천합니다
-                        조용하고, 사람이 많지 않고 천천히 둘러볼 수 있어서 좋았음 (여기가 진주 귀걸이를 한 소녀 있는 곳)<br/><br/>
-
-                        암스테르담에서 제일 좋았던 기억은 운하 보트투어!!!
-                        네덜란드에 왔으면 한 번쯤은 무조건 해봤으면 좋겠다 싶을 정도로 네덜란드만의 분위기를 느끼기 좋음
-                        하이네켄 박물관이랑 고흐 미술관 같이 다녀왔더니 너무 많이 걸어서 진짜 피곤했음
-                        그치만 둘 다 추천함<br/><br/>
-
-                        그리고 스트룹 와플 진짜 맛있으니까 한국 올 때 많이 사오시길.. 나는 조금만 사왔는데 후회했다..
-                        마트에서 얼마 안하고 어느 마트를 가든 다 있으니 많이 사오세요 맛있어요</Content>
+                        <Title>{post.title}</Title>
+                        <Content>{post.content}</Content>
                         <ImgLine>
-                            <Img src={dummy1}/>
-                            <Img src={dummy2}/>
+                            {post.image1? <Img src={img1url}/> : <div></div>}
+                            {post.image2? <Img src={img2url}/> : <div></div>}
+                            {post.image3? <Img src={img3url}/> : <div></div>}
                         </ImgLine>
                         <CommentBMLine>
                             <CommentBMDiv>
@@ -251,7 +299,7 @@ const DetailPage = () => {
                             </CommentBMDiv>
                             <CommentBMDiv onClick={handleBM} style={isBM? {borderColor:"#6695F1", backgroundColor:"#E6EEFC"}: {}}>
                                 {isBM? <img src={bookmark_on}/> :<img src={bookmark}/>}
-                                <HowMany style={isBM? {color:"#6695F1"} : {}}>20</HowMany>
+                                <HowMany style={isBM? {color:"#6695F1"} : {}}>{detail.bookmarks_count}</HowMany>
                             </CommentBMDiv>
                         </CommentBMLine>
                         <CommentField>
@@ -281,15 +329,15 @@ const DetailPage = () => {
                         <InfoDiv>
                             <ProfileImg src={profileimg}/>
                             <MainInfo>
-                                <Age>20대 / 여</Age>
-                                <Name>데미소다</Name>
-                                <Label src={label_blackhole}/>
+                                <Age>{detail.age}세 / {gender[detail.gender]}</Age>
+                                <Name>{detail.nickname}</Name>
+                                <Label src={label[detail.usertype]}/>
                             </MainInfo>
                         </InfoDiv>
                         <BlueTxt>여행 성향</BlueTxt>
-                        <InfoTxt>무엇이든 OK, 블랙홀형 여행자</InfoTxt>
+                        <InfoTxt>{sub_title[detail.usertype]}</InfoTxt>
                         <BlueTxt>자기 소개</BlueTxt>
-                        <InfoTxt>안녕하세요, 저는 휴학하고 이곳저곳 여행 다니고있는 20대입니다. 저는 즉흥적인 편이긴하지만, 함께 여행하는 사람의 성향에 따라서 계획을 짜야할 땐 신중하게 잘 짜는 편이에요!</InfoTxt>
+                        <InfoTxt>{detail.bio}</InfoTxt>
                     </InfoBox>
                 </InfoContainer>
                 <WriteBtn/>

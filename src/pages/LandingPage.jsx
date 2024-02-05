@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
-    const [email, setEmail] = useState('');
+    const [id, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
       setEmail(e.target.value);
@@ -14,7 +18,19 @@ const LandingPage = () => {
 
     const handleLogin = () => {
       // 로그인 로직 추가
-      console.log('로그인 시도:', email, password);
+      console.log('로그인 시도:', id, password);
+      axios.post('http://127.0.0.1:8000/sign/login', 
+      {
+        user_id: id,
+        user_pw : password
+      }, {headers:{'XSRF-Token':Cookies.get('csrftoken')}})
+      .then(res => {
+        alert('로그인 성공!');
+        navigate('/home');
+      })
+      .catch(err => {
+        console.error('login error', err);
+      })
     };
 
     const handleSignUp = () => {
@@ -22,12 +38,13 @@ const LandingPage = () => {
       console.log('회원가입 및 성향테스트하기 클릭');
     };
 
+
     return (
       <div className="startpage">
         <img src="C:\사용자\박민주\startpage\landing.png" alt="플래닛 여행 사이트 랜딩 페이지" />
         <div>
           <label>이메일:</label>
-          <input type="email" value={email} onChange={handleEmailChange} placeholder="이메일" />
+          <input type="email" value={id} onChange={handleEmailChange} placeholder="이메일" />
         </div>
         <div>
           <label>비밀번호:</label>

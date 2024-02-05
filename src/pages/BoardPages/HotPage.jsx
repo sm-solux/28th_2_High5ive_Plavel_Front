@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TopBar from '../../components/TopBar';
 import label_sun from '../../images/label/sun.svg';
@@ -14,6 +14,8 @@ import comment from '../../images/comment.svg';
 import profileimg from '../../images/dummyprofileimg.png';
 import { useNavigate } from 'react-router-dom';
 import WriteBtn from '../../components/WriteBtn';
+import axios from 'axios';
+import Cookies from 'js-cookie'
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -21,6 +23,7 @@ const Body = styled.div`
     padding: 50px 100px 50px 100px;
     display: flex;
     justify-content: space-between;
+    min-height: calc(90vh - 100px);
 `
 const ListContainer = styled.div`
     width: calc(65vw - 100px);
@@ -167,37 +170,70 @@ const MyLabel = styled.img`
     margin-top: 10px;
 `
 
-let list = [
-    {id: 1, title: '첫번째 글', detail: '첫번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_blackhole, date: '2024/01/10 21:25', comment: 2, bookmark: 20},
-    {id: 2, title: '두번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_comet, date: '2024/01/10 21:25', comment: 10, bookmark: 2},
-    {id: 3, title: '세번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_sun, date: '2024/01/10 21:25', comment: 25, bookmark: 1},
-    {id: 4, title: '네번째 글', detail: '두번째 글 내용 어쩌구저쩌구 블라블라 샬라샬라', writer: '데미소다', label: label_jupiter, date: '2024/01/10 21:25', comment: 32, bookmark: 0},
-];  
+let label = {
+    'Jupiter': label_jupiter,
+    'Sun': label_sun,
+    'Comet': label_comet,
+    'Earth': label_earth,
+    'Moon': label_moon,
+    'Saturn': label_saturn,
+    'White': label_whitehole,
+    'Black': label_blackhole
+};
 
 const HotPage = () => {
     const navigate = useNavigate();
+    const [hot, setHot] = useState([]);
     const handleClickList = (e) => {
         const listId = e.target.id;
-        navigate(`/detail/${listId}`);
+        navigate(`/detail/${listId}`, {state: listId});
+    };
+
+    const getHot = () => {
+        axios.get('http://127.0.0.1:8000/board/post_list2')
+        .then(res => {
+            console.log(res.data);
+            setHot(res.data.posts);
+        })
+        .catch(err => {
+            console.error('get hotlist error', err);
+        })
     }
+
+    useEffect(() => {
+        getHot();
+    },[]);
+
+    const getFilter = (e) => {
+        const type = e.target.id;
+        axios.get(`http://127.0.0.1:8000/board/post_filter/?user_type=${type}`)
+        .then(res => {
+            console.log(res.data);
+            setHot(res.data.posts);
+        })
+        .catch(err => {
+            console.error('get filter error', err);
+        })
+    }
+
     return (
         <>
             <TopBar/>
             <Body>
                 <ListContainer>
-                    {list && list.map(list => (
+                    {hot && hot.map(list => (
                         <List key={list.id} id={list.id} onClick={handleClickList}>
                             <Title id={list.id}>{list.title}</Title>
-                            <Detail id={list.id}>{list.detail}</Detail>
+                            <Detail id={list.id}>{list.content}</Detail>
                             <Line>
                                 <InfoDiv>
-                                    <Label src={list.label} id={list.id}/>
-                                    <Writer id={list.id}>{list.writer}</Writer>
-                                    <Date id={list.id}>{list.date}</Date>
+                                    <Label src={label[list.usertype]} id={list.id}/>
+                                    <Writer id={list.id}>{list.author}</Writer>
+                                    <Date id={list.id}>{list.updated_at}</Date>
                                 </InfoDiv>
                                 <CommentBM>
-                                    <CommentImg src={comment} id={list.id}/><Comment id={list.id}>{list.comment}</Comment>
-                                    <BMImg src={bookmark} id={list.id}/><Bookmark id={list.id}>{list.bookmark}</Bookmark>
+                                    <CommentImg src={comment} id={list.id}/><Comment id={list.id}>{list.comments_count}</Comment>
+                                    <BMImg src={bookmark} id={list.id}/><Bookmark id={list.id}>{list.bookmark_count}</Bookmark>
                                 </CommentBM>
                             </Line>
                         </List>
@@ -208,16 +244,16 @@ const HotPage = () => {
                         <Text>필터</Text>
                         <LabelDiv>
                             <LabelLine style={{marginRight:"70px"}}>
-                                <LabelBtn  src={label_sun}/>
-                                <LabelBtn src={label_jupiter}/>
-                                <LabelBtn src={label_comet}/>
-                                <LabelBtn src={label_earth}/>
+                                <LabelBtn src={label_sun} id='Sun' onClick={getFilter}/>
+                                <LabelBtn src={label_jupiter} id='Jupiter' onClick={getFilter}/>
+                                <LabelBtn src={label_comet} id='Comet' onClick={getFilter}/>
+                                <LabelBtn src={label_earth} id='Earth' onClick={getFilter}/>
                             </LabelLine>
                             <LabelLine>
-                                <LabelBtn  src={label_moon}/>
-                                <LabelBtn src={label_saturn}/>
-                                <LabelBtn src={label_whitehole}/>
-                                <LabelBtn src={label_blackhole}/>
+                                <LabelBtn  src={label_moon} id='Moon' onClick={getFilter}/>
+                                <LabelBtn src={label_saturn} id='Saturn' onClick={getFilter}/>
+                                <LabelBtn src={label_whitehole} id='White' onClick={getFilter}/>
+                                <LabelBtn src={label_blackhole} id='Black' onClick={getFilter}/>
                             </LabelLine>
                         </LabelDiv>
                     </FilterBox>

@@ -11,8 +11,9 @@ const StartButton = styled.button`
   border-radius: 50px;
   border: none;
   padding: 15px 35px;
-  margin-top: 10px;
+  margin-top: 30px;
   font-size: 25px;
+  font-weight: 600;
 
   &:hover {
     background-color: #5880cf;
@@ -38,8 +39,9 @@ const Background = styled.div`
 
 const Text = styled.div`
   color: white;
-  margin: 30px;
+  margin-bottom: 30px;
   text-align: center;
+  font-weight: 600;
 `
 
 const TestPage = () => {

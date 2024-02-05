@@ -58,45 +58,56 @@ const ButtonContainer = styled.div`
     align-items: center;
 `;
 
-let info = [
-    {name: '이예지', nickname: '데미소다', email: 'lee.yeji0327@sookmyung.ac.kr', sex: '여', birth: '2002.03.27',
-        introduce: '안녕하세요, 저는 휴학하고 이곳저곳 여행 다니고 있는 20대입니다. 저는 즉흥적인 편이긴하지만, 함께 여행하는 사람의 성향에 따라서 계획을 짜야 할 땐 신중하게 잘 짜는 편이에요!',
-        label: '무엇이든 OK, 블랙홀형 여행자', profileimg: profileimg}
-];
+let sub_title = {
+    'Jupiter': '여행계의 보부상, 목성형 여행자',
+    'Sun': "맛집 탐방가, 태양형 여행자",
+    'Comet': "자유분방! 어디로든, 혜성형 여행자",
+    'Earth': "호기심 대마왕, 지구형 여행자",
+    'Moon': "안전제일, 달형 여행자",
+    'Saturn': "힐링 최고! 감성적인 사진가, 토성형 여행자",
+    'White': "계획 자판기, 화이트홀형 여행자",
+    'Black': "무엇이든 OK!, 블랙홀형 여행자"
+}
+
+let gender = {
+    'M': '남',
+    'F': '여'
+};
 
 
 const MyInfoPage = () => {
 
-    const getmyinfo = () => {
-        axios.get('http://127.0.0.1:8000/mypage/my_info',
-        {
-            headers:{'XSRF-Token':Cookies.get('csrftoken')}
-    })
-    .then(res => {
-        console.log(res.data);
-        alert('받아오기 성공');
-    })
-    .catch(err => {
-        console.err('get myinfo error', err);
-    })
-    }
+    const username = localStorage.getItem('username');
+    const usernickname = localStorage.getItem('usernickname');
+    const useremail = localStorage.getItem('useremail');
+    const usergender = localStorage.getItem('usergender');
+    const userbirth = localStorage.getItem('userbirth');
+    const userbio = localStorage.getItem('userbio');
+    const usertype = localStorage.getItem('usertype');
+    const userimg = localStorage.getItem('userimg');
 
-    useEffect(() => {
-        getmyinfo();
-    },[])
+    // const getmyinfo = () => {
+    //     axios.get('http://127.0.0.1:8000/mypage/my_info',
+    //     {
+    //         headers:{'XSRF-Token':Cookies.get('csrftoken')}
+    // })
+    // .then(res => {
+    //     console.log(res.data);
+    // })
+    // .catch(err => {
+    //     console.err('get myinfo error', err);
+    // })
+    // }
+
+    // useEffect(() => {
+    //     getmyinfo();
+    // },[])
   
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        console.log('로그아웃 클릭');
-        axios.get('http://127.0.0.1:8000/sign/logout')
-        .then(res => {
-          alert('로그아웃 성공!');
-          navigate('/'); 
-        })
-        .catch(err => {
-          console.error('로그아웃 실패', err);
-        })
+        alert('로그아웃되었습니다.');
+        navigate('/');
     };
 
 
@@ -106,42 +117,40 @@ const MyInfoPage = () => {
             <MyBar/>
             <Body>
                 <InfoBox>
-                    {info && info.map(info => (
                         <>
                     <Line>
                         <Title>이름</Title>
-                        <Info>{info.name}</Info>
+                        <Info>{username}</Info>
                     </Line>
                     <Line>
                         <Title>닉네임</Title>
-                        <Info>{info.nickname}</Info>
+                        <Info>{usernickname}</Info>
                     </Line>
                     <Line>
                         <Title>이메일</Title>
-                        <Info>{info.email}</Info>
+                        <Info>{useremail}</Info>
                     </Line>
                     <Line>
                         <Title>성별</Title>
-                        <Info>{info.sex}</Info>
+                        <Info>{gender[usergender]}</Info>
                     </Line>
                     <Line>
                         <Title>생년월일</Title>
-                        <Info>{info.birth}</Info>
+                        <Info>{userbirth}</Info>
                     </Line>
                     <Line>
                         <Title>자기소개</Title>
-                        <Info>{info.introduce}</Info>
+                        <Info>{userbio}</Info>
                     </Line>
                     <Line>
                         <Title>여행 성향</Title>
-                        <Info>{info.label}</Info>
+                        <Info>{sub_title[usertype]}</Info>
                     </Line>
                     <Line>
                         <Title>프로필 사진</Title>
-                        <ProfileImg src={info.profileimg}/>
+                        <ProfileImg src={userimg}/>
                     </Line>
                     </>
-                    ))}
                 </InfoBox>
                 <ButtonContainer>
                     <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>

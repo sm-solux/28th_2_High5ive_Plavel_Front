@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import WriteBtn from '../../components/WriteBtn';
 import axios from 'axios';
 import Cookies from 'js-cookie'
+import filter from '../../images/filter.svg';
 
 const Body = styled.div`
     margin-top: 10vh;
@@ -186,9 +187,27 @@ let label = {
     'Black': label_blackhole
 };
 
+let sub_title = {
+    'Jupiter': '여행계의 보부상, 목성형 여행자',
+    'Sun': "맛집 탐방가, 태양형 여행자",
+    'Comet': "자유분방! 어디로든, 혜성형 여행자",
+    'Earth': "호기심 대마왕, 지구형 여행자",
+    'Moon': "안전제일, 달형 여행자",
+    'Saturn': "힐링 최고! 감성적인 사진가, 토성형 여행자",
+    'White': "계획 자판기, 화이트홀형 여행자",
+    'Black': "무엇이든 OK!, 블랙홀형 여행자"
+}
+
 const HotPage = () => {
     const navigate = useNavigate();
     const [hot, setHot] = useState([]);
+    const [isfilter, setIsFilter] = useState(false);
+    const [filtertype, setFiltertype] = useState('');
+
+    const usernickname = localStorage.getItem('usernickname');
+    const usertype = localStorage.getItem('usertype');
+    const userimg = localStorage.getItem('userimg');
+
     const handleClickList = (e) => {
         const listId = e.target.id;
         navigate(`/detail/${listId}`, {state: listId});
@@ -210,7 +229,10 @@ const HotPage = () => {
     },[]);
 
     const getFilter = (e) => {
+        setIsFilter(true);
         const type = e.target.id;
+        setFiltertype(type);
+        console.log(type);
         axios.get(`http://127.0.0.1:8000/board/post_filter/?user_type=${type}`)
         .then(res => {
             console.log(res.data);
@@ -226,6 +248,15 @@ const HotPage = () => {
             <TopBar/>
             <Body>
                 <ListContainer>
+                {isfilter?
+                    <FilterDiv>
+                        <FilterImg src={filter}/>
+                        <FilterText>필터</FilterText>
+                        <FilterLabel src={label[filtertype]}/>
+                    </FilterDiv>
+                    :
+                    <></>
+                }
                     {hot && hot.map(list => (
                         <List key={list.id} id={list.id} onClick={handleClickList}>
                             <Title id={list.id}>{list.title}</Title>
@@ -265,10 +296,10 @@ const HotPage = () => {
                     <MyInfoBox>
                         <Text>나의 정보</Text>
                         <MyDiv>
-                            <ProfileImg src={profileimg}/>
-                            <MyLabelExp>자유분방 어디로든, 혜성형 여행자</MyLabelExp>
-                            <MyName>닉네임님</MyName>
-                            <MyLabel src={label_comet}/>
+                            <ProfileImg src={userimg}/>
+                            <MyLabelExp>{sub_title[usertype]}</MyLabelExp>
+                            <MyName>{usernickname}</MyName>
+                            <MyLabel src={label[usertype]}/>
                         </MyDiv>
                     </MyInfoBox>
                 </InfoContainer>
@@ -279,3 +310,21 @@ const HotPage = () => {
 };
 
 export default HotPage;
+
+const FilterDiv = styled.div`
+    display: flex;
+    margin-bottom: 10px;
+`
+const FilterImg = styled.img`
+    
+`
+const FilterText = styled.div`
+    color: #6695F1;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 49px;
+    margin-right: 8px;
+`
+const FilterLabel = styled.img`
+    margin-left: 10px;
+`

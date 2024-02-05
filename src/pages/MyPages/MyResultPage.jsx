@@ -104,8 +104,20 @@ const List = [
     "블랙홀","화이트홀", "지구", "토성", "태양", "혜성", "목성", "달"
 ];
 
+let type = {
+    'Jupiter': 6,
+    'Sun': 4,
+    'Comet':5,
+    'Earth': 2,
+    'Moon': label_moon,
+    'Saturn': 3,
+    'White': 1,
+    'Black': 0,
+}
+
 const MyResultPage = () => {
-    let result = 5;
+    let result = type[localStorage.getItem('usertype')];
+    const usernickname = localStorage.getItem('usernickname');
 
     /*const handleResult = () => {
         //백에서 결과 전달 받기
@@ -135,7 +147,7 @@ const MyResultPage = () => {
         <TopBar/>
         <MyBar/>
         <Body>
-            <Name>@@@님의 여행 성향</Name>
+            <Name>{usernickname}님의 여행 성향</Name>
             <Box>
                 <Image src={infoList[result].img}/>
                 <Containter>
@@ -266,9 +278,12 @@ const Button = styled.button`
 
   &:hover {
     background-color: #5880cf;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: right;
+  margin-right: 130px;
+  margin-top: -60px;
 `;

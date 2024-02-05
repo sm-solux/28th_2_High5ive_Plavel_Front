@@ -274,9 +274,9 @@ const Container = styled.div`
     align-items: center;
 `;
 const Image = styled.img`
-    width: 250px;
+    width: 200px;
     display: block;
-    margin: 30px auto;
+    margin: 50px auto;
 `;
 
 const TestButton = styled.button`

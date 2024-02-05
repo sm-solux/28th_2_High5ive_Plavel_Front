@@ -147,6 +147,7 @@ const LandingPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [userinfo, setUserinfo] = useState([]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -174,6 +175,14 @@ const LandingPage = () => {
       localStorage.setItem('token', res.data.token);
       console.log(res);
       console.log(localStorage.getItem('token'));
+      localStorage.setItem('userbio', res.data.user.bio);
+      localStorage.setItem('userbirth', res.data.user.birth_date);
+      localStorage.setItem('useremail', res.data.user.email);
+      localStorage.setItem('usergender', res.data.user.gender);
+      localStorage.setItem('usernickname', res.data.user.nickname);
+      localStorage.setItem('userimg', res.data.user.profile_pic);
+      localStorage.setItem('usertype', res.data.user.user_type);
+      localStorage.setItem('username', res.data.user.username);
     })
     .catch(err => {
       console.error('login error', err);

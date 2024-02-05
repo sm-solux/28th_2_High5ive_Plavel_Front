@@ -24,6 +24,7 @@ import circle2 from '../images/3dicon_test/circle2.png';
 import circle3 from '../images/3dicon_test/circle3.png';
 import circle4 from '../images/3dicon_test/circle4.png';
 import { useMediaQuery } from "react-responsive";
+import axios from 'axios';
 
 const infoList = [
     {
@@ -104,9 +105,22 @@ const List = [
     "블랙홀","화이트홀", "지구", "토성", "태양", "혜성", "목성", "달"
 ];
 
+const type = {
+    0: 'Black',
+    1: 'White',
+    2: 'Earth',
+    3: 'Saturn',
+    4: 'Sun',
+    5: 'Comet',
+    6: 'Jupiter',
+    7: 'Moon'
+};
+
 const TestResult = ({ result }) => {
     const [showResult, setShowResult] = useState(false);
     const isDesktop = useMediaQuery({ minWidth: 750 });
+    const usertype = type[result];
+    localStorage.setItem('usertype', usertype);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -122,12 +136,28 @@ const TestResult = ({ result }) => {
         window.location.href = '/home';
     }
     const GetResult = () => {
+        const postType = () => {
+            axios.post('http://127.0.0.1:8000/mypage/my_test', {
+                user_type: usertype
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.error('post type error', err);
+            })
+        }
+
+        useEffect(() => {
+            postType();
+        })
+
         return (
             <>
             {isDesktop?
             <>
                 <Circle src={circle}/>
-                <Name>@@@님의 여행 성향</Name>
+                <Name>{localStorage.getItem('signupnickname')}님의 여행 성향</Name>
                 <Circle2 src={circle2}/>
                 <Circle3 src={circle3}/>
                 <Circle4 src={circle4}/>
@@ -207,8 +237,10 @@ const TestResult = ({ result }) => {
         <div>
             {!showResult ? (
                 <Loading>
+                        <div>
                         <LoadImage src={loading}/>
                         <Load> 여행 성향을 분석중입니다.</Load>
+                        </div>
                 </Loading>
             ) : (
                 <>
@@ -323,8 +355,10 @@ const MImage = styled.img`
 
 const Loading = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
+    height: 100vh;
+    justify-content: center;
+    text-align: center;
 `;
 
 const Load = styled.h3`
@@ -332,6 +366,7 @@ const Load = styled.h3`
     display: flex;
     color: white;
     font-size: 15px;
+    text-align: center;
 `;
 
 const LoadImage = styled.img`
@@ -340,9 +375,10 @@ const LoadImage = styled.img`
 
 const Circle = styled.img`
     position: absolute;
-    top: 0;
+    top: 5;
     left: 0;
     width: 600px;
+    overflow: hidden;
 `;
 
 const Circle2 = styled.img`
@@ -366,8 +402,10 @@ const Circle4 = styled.img`
 
 const Name = styled.h2`
     color: white;
-    font-size: 30px;
+    font-size: 35px;
+    padding-top: 50px;
     margin-bottom: 50px;
+    margin-left: 50px;
 `;
 const ParentContainer = styled.div`
     display: flex;
@@ -390,8 +428,8 @@ const SecondContainer = styled.div`
 `;
 
 const Image = styled.img`
-    width: 380px;
-    margin-right: 100px;
+    width: 300px;
+    margin-right: 30px;
 
     z-index: 1;
 `;
@@ -399,11 +437,13 @@ const Image = styled.img`
 const Type = styled.h1`
     margin-right: 10px;
     font-size: 40px;
+    margin-right: 20px;
 `;
 
 const SubTitle = styled.div`
-    font-size: 30px;
+    font-size: 28px;
     margin-bottom: 0;
+    font-weight: 500;
 `;
 
 const LabelContainer = styled.div`
@@ -419,7 +459,8 @@ const LabelImage = styled.img`
 const Description = styled.div`
     margin-right: 5px;
     margin-left: 5px;
-    font-size: 25px;
+    font-size: 23px;
+    font-weight: 400;
 `;
 
 const SecondChild = styled.div`
@@ -486,6 +527,7 @@ const Button = styled.button`
     padding: 15px 20px;
     margin: 40px;
     border: none;
+    font-weight: 500;
     
     color: white;
     background: #6063A5;
@@ -494,6 +536,7 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     z-index: 1;
+    cursor: pointer;
 
     &:hover {
         background-color: #4C5190;

@@ -277,12 +277,12 @@ const SignupPage = () => {
         const currentBirth = e.target.value;
         setBirth(currentBirth);
 
-        const birthRegex = /^\d{4}\.\d{2}\.\d{2}$/;
+        const birthRegex = /^\d{4}\-\d{2}\-\d{2}$/;
 
         if (!birthRegex.test(currentBirth)) {
             setBirthMessage(
                 <span style={{ color: '#FE334C' }}>
-                YYYY.MM.DD 형식으로 입력해주세요.
+                YYYY-MM-DD 형식으로 입력해주세요.
                 </span>
             );
         } else {
@@ -320,6 +320,16 @@ const SignupPage = () => {
 
     const handleSignup = () => {
         navigate('/test');
+        localStorage.setItem('signupnickname', nickname);
+
+        localStorage.setItem('userbio', introduce);
+        localStorage.setItem('userbirth', birth);
+        localStorage.setItem('useremail', email);
+        localStorage.setItem('usergender', gender);
+        localStorage.setItem('usernickname', nickname);
+        localStorage.setItem('userimg', imgRef.current.files[0]);
+        localStorage.setItem('usertype', 'Black');
+        localStorage.setItem('username', name);
         console.log(
             `
             아이디: ${id}\n
@@ -343,8 +353,8 @@ const SignupPage = () => {
             user_birth_date: birth,
             user_nickname: nickname,
             user_bio: introduce,
-            user_profile_pic: imgFile,
-            user_type: 'Sun'
+            user_profile_pic: imgRef.current.files[0],
+            user_user_type: 'Sun'
 
         })
         .then(res => {
@@ -417,8 +427,8 @@ const SignupPage = () => {
                         <div style={{width: "45%"}}>
                             <Title>성별</Title>
                             <FlexDiv>
-                                <GenderBtn id='m' onClick={handleGender} style={{backgroundColor: gender === 'm'? 'white' : '', color: gender === 'm'? 'black' : ''}}>남</GenderBtn>
-                                <GenderBtn id='f' onClick={handleGender} style={{backgroundColor: gender === 'f'? 'white' : '', color: gender === 'f'? 'black' : ''}}>여</GenderBtn>
+                                <GenderBtn id='M' onClick={handleGender} style={{backgroundColor: gender === 'M'? 'white' : '', color: gender === 'M'? 'black' : ''}}>남</GenderBtn>
+                                <GenderBtn id='F' onClick={handleGender} style={{backgroundColor: gender === 'F'? 'white' : '', color: gender === 'F'? 'black' : ''}}>여</GenderBtn>
                             </FlexDiv>
                         </div>
                     </FlexDiv>
@@ -427,7 +437,7 @@ const SignupPage = () => {
                         <Input
                             name='birth'
                             type='text'
-                            placeholder='YYYY.MM.DD 형태로 입력해주세요.'
+                            placeholder='YYYY-MM-DD 형태로 입력해주세요.'
                             onChange={onChangeBirth}
                             value={birth}/>
                     </InputLine>

@@ -8,6 +8,9 @@ const Background = styled.div`
   background: linear-gradient(#253149, #323691);
   width: 100vw; 
   height: 100vh;
+
+  display: flex;
+  justify-content: center;
 `;
 
 const TestResultPage = () => {

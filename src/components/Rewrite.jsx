@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState , useEffect } from 'react';
+import { useNavigate , useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 import photo from '../images/photo.svg';
 import camera from '../images/camera.svg';
@@ -142,7 +142,9 @@ const PostBtn = styled.button`
     }
 `
 
-const WritePage = (postId) => {
+const WritePage = () => {
+    const { state } = useLocation();
+    const postId = state;
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const imgRef = useRef();
@@ -202,14 +204,12 @@ const WritePage = (postId) => {
 
     //수정할 글 받아오기
     const getDetail = () => {
-        axios.get(`http://127.0.0.1:8000/board/post_detail/${postId}`)
+        axios.get(`http://127.0.0.1:8000/board/articles/${postId}`)
         .then(res => {
             //세부 data 받아오기
-            console.log(res);
-            const serverDomain = 'http://127.0.0.1:8000';
-            const imagePath = res.data.post.image1;
-            const imagePath2 = res.data.post.image2;
-            const imagePath3 = res.data.post.image3;
+            console.log(res)
+            setContent(res.data.content)
+            setTitle(res.data.title)
         })
         .catch(err => {
             console.error('get detail error', err);
@@ -217,8 +217,8 @@ const WritePage = (postId) => {
     }
     
     //수정한 글 보내기
-    const handlePost = () => {
-        axios.put(`http://127.0.0.1:8000//board/post_edit/${postId}`, {
+    const handlePut = () => {
+        axios.put(`http://127.0.0.1:8000/board/articles/${postId}/`, {
             title: title,
             content: content
         })
@@ -231,6 +231,11 @@ const WritePage = (postId) => {
             console.error('Error handle post: ', error);
         });
     }
+
+    useEffect(() => {
+        getDetail();
+
+    },[]);
 
     return (
         <>
@@ -301,7 +306,7 @@ const WritePage = (postId) => {
                     </PhotoBox>
                 </PhotoLine>
                 <PostLine>
-                    <PostBtn onClick={handlePost}>
+                    <PostBtn onClick={handlePut}>
                         <img src={arrow}/>
                         <div>다시게시하기</div>
                     </PostBtn>

@@ -306,9 +306,9 @@ const DetailPage = () => {
             setProfile(serverDomain + profpath);
             handleBtn(res.data.author.nickname);
 
-            console.log(2024 - parseInt(post.birth_date.substr(0, 4)));
+            console.log(2024 - parseInt(res.data.author.birth_date.substr(0, 4)));
 
-            setAge(2024 - parseInt(post.birth_date.substr(0, 4)));
+            setAge(2024 - parseInt(res.data.author.birth_date.substr(0, 4)));
         })
         .catch(err => {
             console.error('get detail error', err);
@@ -316,7 +316,7 @@ const DetailPage = () => {
     }
 
     const handleBtn = (nickname) => {
-        //글사용자와 현재 사용자의 닉네임이 같으면
+        //localStorage 닉네임 받아오기
         if(nickname === "눈송"){
             console.log("참");
             setIsTrue(true);
@@ -348,7 +348,6 @@ const DetailPage = () => {
     useEffect(() => {
         console.log(state);
         getDetail();
-
     },[]);
 
     return (

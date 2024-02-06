@@ -59,7 +59,7 @@ const SignUpButton = styled.button`
 const EmailInput = styled.input`
   width: 300px;
   height: 50px;
-  background-color: #8E8E8E;
+  background-color: #8e8e8e7e;
   border: none;
   border-radius: 20px;
 
@@ -67,13 +67,23 @@ const EmailInput = styled.input`
   padding: 10px;
   opacity: 0.6;
 
+  color: white;
+    font-weight: 500;
+
+    outline: none;
+    padding-left: 20px;
+
   font-size: 20px;
+  &::placeholder {
+    color: white;
+    font-weight: 500;
+  }
 `;
 
 const PwInput = styled.input`
   width: 300px;
   height: 50px;
-  background-color: #8E8E8E;
+  background-color: #8e8e8e7e;
   border: none;
   border-radius: 20px;
 
@@ -81,7 +91,17 @@ const PwInput = styled.input`
   padding: 10px;
   opacity: 0.6;
 
+  outline: none;
+
+  color: white;
+    font-weight: 500;
+    padding-left: 20px;
+
   font-size: 20px;
+  &::placeholder {
+    color: white;
+    font-weight: 500;
+  }
 `;
 
 const Earth = styled.img`
@@ -208,7 +228,7 @@ const LandingPage = () => {
           <EmailInput
               value={email}
               onChange={handleEmailChange}
-              placeholder='이메일'
+              placeholder='아이디'
           />
           <PwInput
               value={password}
